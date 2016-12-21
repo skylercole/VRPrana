@@ -1,1 +1,5 @@
 # Add any directories, files, or patterns you don't want to be tracked by version control
+moviefromcard.apk
+Assets/Plugins/EasyMovieTexture.bundle/Contents/MacOS.meta
+Assets/Plugins/EasyMovieTexture.bundle/Contents/MacOS/ffmpeg
+Assets/Plugins/EasyMovieTexture.bundle/Contents/MacOS/ffmpeg.meta
