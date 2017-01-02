@@ -4,6 +4,7 @@ public class ShowAdvice : MonoBehaviour {
 
     float timeRemaining = 60f;
     private int currentAdvice = 0;
+    public AudioSource audio;
 
     // Use this for initialization
     void Start ()
@@ -49,7 +50,21 @@ public class ShowAdvice : MonoBehaviour {
                     break;
             }
 
-            if (timeToAdd > 0 ) GetComponent<TextMesh>().text = advice;
+            if (timeToAdd > 0)
+            {
+                GetComponent<TextMesh>().text = advice;
+
+                if (audio.pitch > 1)
+                { 
+                    audio.pitch = 1;
+                }
+                else
+                {
+                    audio.pitch = 1.1f;
+                }
+                audio.Stop();
+                audio.Play();
+            }
 
             timeRemaining = timeToAdd;
         }

@@ -78,7 +78,7 @@ public static class ProgressTypes
             CycleTime = 15,
             InhaleRatio = 12,
             RetainRatio = 0,
-            ExhaleRatio = 2,
+            ExhaleRatio = 3,
             SustainRatio = 0
         },
         new ProgressType

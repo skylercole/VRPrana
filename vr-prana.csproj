@@ -17,8 +17,7 @@
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -78,6 +77,41 @@
   <ItemGroup>
     <Compile Include="Assets\ChangeProgressTexture.cs" />
     <Compile Include="Assets\ChangeTime.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_AnimateCurvedFillOnStart.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_CameraController.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_CameraRotationOnButtonHeld.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ChangeValueOnHold.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_DragBetweenCanvases.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_GunController.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_GunMovement.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_MoveAlong.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_MoveHeartbeat.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_OrientOnCurvedSpace.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_PerlinNoisePosition.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_PerlinNoiseRotation.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_RaycastToCanvas.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_RiseChildrenOverTime.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ShowParentCoordinates.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_TMPChecker.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ViveButtonState.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ViveHapticPulse.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ViveLaserBeam.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_WorldSpaceCursorFollow.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_WorldSpaceMouseMultipleCanvases.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_ZChangeOnHover.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_draggable.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_guntarget.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_inventory_paralax.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_rotation_anim.cs" />
+    <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_touchpad.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIInputFieldCaret.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIInputModule.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIPointerEventData.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIRaycaster.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUISettings.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIVertexEffect.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\CurvedUIViveController.cs" />
+    <Compile Include="Assets\CurvedUI\Scripts\Experimental\CurvedUITMP.cs" />
     <Compile Include="Assets\EasyMovieTexture\FFmpeg.AutoGen\FFmpeg.avcodec.g.cs" />
     <Compile Include="Assets\EasyMovieTexture\FFmpeg.AutoGen\FFmpeg.avdevice.g.cs" />
     <Compile Include="Assets\EasyMovieTexture\FFmpeg.AutoGen\FFmpeg.avfilter.g.cs" />
@@ -160,6 +194,8 @@
     <Compile Include="Assets\VisibilityOnButton.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\OverlayBlend.shader" />
+    <None Include="Assets\CurvedUI\Shaders and Materials\UIAlwaysOnTop.shader" />
     <None Include="Assets\EasyMovieTexture\Chromakey.shader" />
     <None Include="Assets\EasyMovieTexture\Chromakey2.shader" />
     <None Include="Assets\EasyMovieTexture\Unlit_SphereInside.shader" />
