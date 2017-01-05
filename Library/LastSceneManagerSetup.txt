@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/EasyMovieTexture/Scene/Demo_Sphere.unity
+- path: Assets/CurvedUI/Demo Scenes/05 VRMenuWithVRRaycaster.unity
   isLoaded: 1
   isActive: 1

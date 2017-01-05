@@ -135,6 +135,7 @@
     <None Include="Assets\EasyMovieTexture\Unlit_SphereInside.shader" />
     <None Include="Assets\EasyMovieTexture\readme.txt" />
     <None Include="Assets\EasyMovieTexture\readme_License.txt" />
+    <None Include="Assets\Particle Ribbon\readme_Simple_Particle_Ribbon.txt" />
     <None Include="Assets\ProgressBar\Shaders\AlphaProgress.shader" />
     <None Include="Assets\ReverseFont.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\SeparableAlpha.shader" />

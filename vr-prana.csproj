@@ -75,8 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ChangeCycleTime.cs" />
+    <Compile Include="Assets\ChangeFullProgressTime.cs" />
     <Compile Include="Assets\ChangeProgressTexture.cs" />
-    <Compile Include="Assets\ChangeTime.cs" />
     <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_AnimateCurvedFillOnStart.cs" />
     <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_CameraController.cs" />
     <Compile Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\CUI_CameraRotationOnButtonHeld.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Assets\FillWholeProgress.cs" />
     <Compile Include="Assets\GlobalVariables.cs" />
     <Compile Include="Assets\ManualCameraControl.cs" />
+    <Compile Include="Assets\Particle Ribbon\Scripts\ReverseNormals.cs" />
     <Compile Include="Assets\ProgressBar\Scripts\CiclularProgress.cs" />
     <Compile Include="Assets\ProgressBar\Scripts\GameObjectRotate.cs" />
     <Compile Include="Assets\ProgressType.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Assets\Scripts\ChangeText.cs" />
     <Compile Include="Assets\Scripts\Reticle.cs" />
     <Compile Include="Assets\ShowAdvice.cs" />
+    <Compile Include="Assets\TimeSlider.cs" />
     <Compile Include="Assets\VRSampleScenes\Scripts\Common\SessionData.cs" />
     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleInteractiveItem.cs" />
     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleRenderScale.cs" />
@@ -201,6 +204,7 @@
     <None Include="Assets\EasyMovieTexture\Unlit_SphereInside.shader" />
     <None Include="Assets\EasyMovieTexture\readme.txt" />
     <None Include="Assets\EasyMovieTexture\readme_License.txt" />
+    <None Include="Assets\Particle Ribbon\readme_Simple_Particle_Ribbon.txt" />
     <None Include="Assets\ProgressBar\Shaders\AlphaProgress.shader" />
     <None Include="Assets\ReverseFont.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\SeparableAlpha.shader" />
