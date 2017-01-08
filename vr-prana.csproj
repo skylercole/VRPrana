@@ -134,12 +134,16 @@
     <Compile Include="Assets\GlobalVariables.cs" />
     <Compile Include="Assets\ManualCameraControl.cs" />
     <Compile Include="Assets\Particle Ribbon\Scripts\ReverseNormals.cs" />
+    <Compile Include="Assets\PlayScene.cs" />
     <Compile Include="Assets\ProgressBar\Scripts\CiclularProgress.cs" />
     <Compile Include="Assets\ProgressBar\Scripts\GameObjectRotate.cs" />
     <Compile Include="Assets\ProgressType.cs" />
-    <Compile Include="Assets\RunFixedTime.cs" />
     <Compile Include="Assets\Scripts\ChangeText.cs" />
     <Compile Include="Assets\Scripts\Reticle.cs" />
+    <Compile Include="Assets\SelectAudio.cs" />
+    <Compile Include="Assets\SelectBreathControl.cs" />
+    <Compile Include="Assets\SelectScene.cs" />
+    <Compile Include="Assets\SettingsManager.cs" />
     <Compile Include="Assets\ShowAdvice.cs" />
     <Compile Include="Assets\TimeSlider.cs" />
     <Compile Include="Assets\VRSampleScenes\Scripts\Common\SessionData.cs" />

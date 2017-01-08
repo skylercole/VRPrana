@@ -18,5 +18,6 @@ public class TimeSlider : MonoBehaviour
     public void ValueChangeCheck()
     {
         timeText.text = String.Format("{00:00}:00", mainSlider.value);
+        GlobalVariables.TimeMinutes = Convert.ToInt32(mainSlider.value);
     }
 }

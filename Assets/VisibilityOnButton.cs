@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VRStandardAssets.Utils;
 
@@ -32,10 +33,10 @@ public class VisibilityOnButton : MonoBehaviour {
 
             visible = !visible;
         };
+
+        input.OnCancel += () =>
+        {
+            SceneManager.LoadSceneAsync("Scenes/05 VRMenuWithVRRaycaster");
+        };
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

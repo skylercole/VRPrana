@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/CurvedUI/Demo Scenes/05 VRMenuWithVRRaycaster.unity
+- path: Assets/Scenes/05 VRMenuWithVRRaycaster.unity
   isLoaded: 1
   isActive: 1

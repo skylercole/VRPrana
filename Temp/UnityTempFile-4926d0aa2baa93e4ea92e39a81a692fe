@@ -1,0 +1,200 @@
+-debug
+-target:library
+-nowarn:0169
+-langversion:4
+-out:Temp/Assembly-CSharp.dll
+-optimize
+-r:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/mono/Managed/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Standalone/UnityEngine.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Standalone/UnityEngine.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Runtime/UnityEngine.VR.dll"
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_5_0
+-define:UNITY_5_5
+-define:UNITY_5
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_GENERICS
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_SPRITERENDERER_FLIPPING
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_UNET
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES_COLLAB
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_EDITOR_METRICS_CACHING
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:PLATFORM_SUPPORTS_MONO
+-define:INCLUDE_PUBNUB
+-define:ENABLE_PLAYMODE_TESTS_RUNNER
+-define:ENABLE_SCRIPTING_NEW_CSHARP_COMPILER
+-define:UNITY_ANDROID
+-define:ENABLE_SUBSTANCE
+-define:UNITY_ANDROID_API
+-define:ENABLE_EGL
+-define:ENABLE_NETWORK
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:PLATFORM_SUPPORTS_ADS_ID
+-define:UNITY_CAN_SHOW_SPLASH_SCREEN
+-define:ENABLE_VIDEO
+-define:ENABLE_VR
+-define:ENABLE_UNITYADS_RUNTIME
+-define:UNITY_UNITYADS_API
+-define:ENABLE_MONO
+-define:CROSS_PLATFORM_INPUT
+-define:MOBILE_INPUT
+Assets/ChangeCycleTime.cs
+Assets/ChangeFullProgressTime.cs
+Assets/ChangeProgressTexture.cs
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_AnimateCurvedFillOnStart.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_CameraController.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_CameraRotationOnButtonHeld.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ChangeValueOnHold.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_DragBetweenCanvases.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_GunController.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_GunMovement.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_MoveAlong.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_MoveHeartbeat.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_OrientOnCurvedSpace.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_PerlinNoisePosition.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_PerlinNoiseRotation.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_RaycastToCanvas.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_RiseChildrenOverTime.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ShowParentCoordinates.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_TMPChecker.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ViveButtonState.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ViveHapticPulse.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ViveLaserBeam.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_WorldSpaceCursorFollow.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_WorldSpaceMouseMultipleCanvases.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_ZChangeOnHover.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_draggable.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_guntarget.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_inventory_paralax.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_rotation_anim.cs"
+"Assets/CurvedUI/Demo Scenes/Demo Scenes Content/CUI_touchpad.cs"
+Assets/CurvedUI/Scripts/CurvedUIInputFieldCaret.cs
+Assets/CurvedUI/Scripts/CurvedUIInputModule.cs
+Assets/CurvedUI/Scripts/CurvedUIPointerEventData.cs
+Assets/CurvedUI/Scripts/CurvedUIRaycaster.cs
+Assets/CurvedUI/Scripts/CurvedUISettings.cs
+Assets/CurvedUI/Scripts/CurvedUIVertexEffect.cs
+Assets/CurvedUI/Scripts/CurvedUIViveController.cs
+Assets/CurvedUI/Scripts/Experimental/CurvedUITMP.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.avcodec.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.avdevice.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.avfilter.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.avformat.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.avutil.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.swresample.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/FFmpeg.swscale.g.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/Properties/AssemblyInfo.cs
+Assets/EasyMovieTexture/FFmpeg.AutoGen/Unresolved.cs
+Assets/EasyMovieTexture/Scripts/MedaiPlayerSampleGUI.cs
+Assets/EasyMovieTexture/Scripts/MedaiPlayerSampleSphereGUI.cs
+Assets/EasyMovieTexture/Scripts/MediaPlayerCtrl.cs
+Assets/EasyMovieTexture/Scripts/MediaPlayerEvent.cs
+Assets/EasyMovieTexture/Scripts/MediaPlayerFullScreenCtrl.cs
+Assets/EasyMovieTexture/Scripts/SeekBarCtrl.cs
+Assets/EasyMovieTexture/Scripts/SphereMirror.cs
+Assets/FillProgress.cs
+Assets/FillWholeProgress.cs
+Assets/GlobalVariables.cs
+Assets/ManualCameraControl.cs
+"Assets/Particle Ribbon/Scripts/ReverseNormals.cs"
+Assets/PlayScene.cs
+Assets/ProgressBar/Scripts/CiclularProgress.cs
+Assets/ProgressBar/Scripts/GameObjectRotate.cs
+Assets/ProgressType.cs
+Assets/Scripts/ChangeText.cs
+Assets/Scripts/Reticle.cs
+Assets/SelectAudio.cs
+Assets/SelectBreathControl.cs
+Assets/SelectScene.cs
+Assets/SettingsManager.cs
+Assets/ShowAdvice.cs
+Assets/TimeSlider.cs
+Assets/VRSampleScenes/Scripts/Common/SessionData.cs
+Assets/VRSampleScenes/Scripts/Examples/ExampleInteractiveItem.cs
+Assets/VRSampleScenes/Scripts/Examples/ExampleRenderScale.cs
+Assets/VRSampleScenes/Scripts/Examples/ExampleRotation.cs
+Assets/VRSampleScenes/Scripts/Examples/ExampleTouchpad.cs
+Assets/VRSampleScenes/Scripts/Flyer/Asteroid.cs
+Assets/VRSampleScenes/Scripts/Flyer/AsteroidExplosion.cs
+Assets/VRSampleScenes/Scripts/Flyer/EnvironmentController.cs
+Assets/VRSampleScenes/Scripts/Flyer/ExplosionPhysicsForce.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerAlignmentChecker.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerGameController.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerHealthController.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerLaser.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerLaserController.cs
+Assets/VRSampleScenes/Scripts/Flyer/FlyerMovementController.cs
+Assets/VRSampleScenes/Scripts/Flyer/ParticleSystemMultiplier.cs
+Assets/VRSampleScenes/Scripts/Flyer/Ring.cs
+Assets/VRSampleScenes/Scripts/Flyer/UIController.cs
+Assets/VRSampleScenes/Scripts/Intro/IntroManager.cs
+Assets/VRSampleScenes/Scripts/Maze/AICharacterControl.cs
+Assets/VRSampleScenes/Scripts/Maze/AgentTrail.cs
+Assets/VRSampleScenes/Scripts/Maze/CameraOrbit.cs
+Assets/VRSampleScenes/Scripts/Maze/DestinationMarker.cs
+Assets/VRSampleScenes/Scripts/Maze/ExitArea.cs
+Assets/VRSampleScenes/Scripts/Maze/MazeGameController.cs
+Assets/VRSampleScenes/Scripts/Maze/MazeTargetSetting.cs
+Assets/VRSampleScenes/Scripts/Maze/Player.cs
+Assets/VRSampleScenes/Scripts/Maze/SwitchButton.cs
+Assets/VRSampleScenes/Scripts/Maze/ThirdPersonCharacter.cs
+Assets/VRSampleScenes/Scripts/Maze/Turret.cs
+Assets/VRSampleScenes/Scripts/Menu/MenuAnimator.cs
+Assets/VRSampleScenes/Scripts/Menu/MenuButton.cs
+Assets/VRSampleScenes/Scripts/Menu/MenuItemPopout.cs
+Assets/VRSampleScenes/Scripts/Menu/MenuSelectorMover.cs
+Assets/VRSampleScenes/Scripts/Utils/GUIArrows.cs
+Assets/VRSampleScenes/Scripts/Utils/InputWarnings.cs
+Assets/VRSampleScenes/Scripts/Utils/ObjectPool.cs
+Assets/VRSampleScenes/Scripts/Utils/PlatformDependentText.cs
+Assets/VRSampleScenes/Scripts/Utils/ReturnToMainMenu.cs
+Assets/VRSampleScenes/Scripts/Utils/SelectionRadial.cs
+Assets/VRSampleScenes/Scripts/Utils/SelectionSlider.cs
+Assets/VRSampleScenes/Scripts/Utils/UIFader.cs
+Assets/VRSampleScenes/Scripts/Utils/UIMovement.cs
+Assets/VRSampleScenes/Scripts/Utils/UITint.cs
+Assets/VRSampleScenes/Scripts/Utils/VRCameraFade.cs
+Assets/VRSampleScenes/Scripts/Utils/VRCameraUI.cs
+Assets/VRStandardAssets/Scripts/VRDeviceManager.cs
+Assets/VRStandardAssets/Scripts/VREyeRaycaster.cs
+Assets/VRStandardAssets/Scripts/VRFPSCounter.cs
+Assets/VRStandardAssets/Scripts/VRInput.cs
+Assets/VRStandardAssets/Scripts/VRInteractiveItem.cs
+Assets/VRStandardAssets/Scripts/VRTrackingReset.cs
+Assets/VisibilityOnButton.cs
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Runtime.Serialization.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Xml.Linq.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.Lang.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\Boo.Lang.dll"
+@Assets\smcs.rsp
+-sdk:unity

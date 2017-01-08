@@ -1,30 +1,54 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ChangeFullProgressTime : MonoBehaviour
 {
-    float starttime;
-    private float min;
-    private float sec;
+    private float starttime;
+    private TimeSpan t;
+
+    void Awake()
+    {
+        starttime = GlobalVariables.TimeMinutes * 60;
+        var calc = starttime % ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].CycleTime;
+        if (calc > 0)
+        {
+            starttime -= calc;
+            starttime += ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].CycleTime;
+        }
+
+        ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].WholeTime = Convert.ToInt32(starttime);
+
+        t = TimeSpan.FromSeconds(starttime);
+
+        GetComponent<TextMesh>().text = "";
+    }
 
     // Use this for initialization
     void Start()
     {
-        starttime = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].WholeTime;
-        CalcAndDraw();
         InvokeRepeating("decreaseTimeRemaining", 1.0f, 1.0f);
     }
 
     void decreaseTimeRemaining()
     {
-        starttime--;
-        CalcAndDraw();
-    }
-
-    void CalcAndDraw()
-    {
-        min = starttime/60;
-        sec = starttime%60;
-        GetComponent<TextMesh>().text = String.Format("{00:00}:{1:00}", min, sec);
+        if (ChangeCycleTime.InitalCounter > 1)
+        {
+            GetComponent<TextMesh>().text = "";
+        }
+        else if (ChangeCycleTime.InitalCounter == 1)
+        {
+            GetComponent<TextMesh>().text = String.Format("{0:00}:{1:00}", t.Minutes, t.Seconds);
+        }
+        else if (starttime > 1)
+        {
+            starttime--;
+            t = TimeSpan.FromSeconds(starttime);
+            GetComponent<TextMesh>().text = String.Format("{0:00}:{1:00}", t.Minutes, t.Seconds);
+        }
+        else if (starttime <= 2)
+        {
+            SceneManager.LoadScene("Scenes/05 VRMenuWithVRRaycaster");
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace VRStandardAssets.Maze
         [SerializeField] private SwitchButton m_MazeSwitch;                 // This needs to be reset for each new game.
         [SerializeField] private Turret m_Turret;                           // This needs to be reset for each new game.
         [SerializeField] private DestinationMarker m_DestinationMarker;     // This needs to know when to be visible and not.
-        [SerializeField] private AudioSource m_GameOverAudioSource;         // The audio source that plays the audio for when the player loses the game.
+        [SerializeField] private AudioSource m_GameOverAudioSource;         // The audio source that plays the Audio for when the player loses the game.
         [SerializeField] private VRCameraFade m_CameraFade;                 // Used for fading in and out between plays of the game.
         [SerializeField] private SelectionRadial m_SelectionRadial;         // Used for restarting the game at the end.
         [SerializeField] private CameraOrbit m_CameraOrbit;                 // This needs to be reset for each new game.

@@ -5,12 +5,13 @@ public class ShowAdvice : MonoBehaviour {
     float timeRemaining = 60f;
     private int currentAdvice = 0;
     public AudioSource audio;
+    private bool setFirstInhale = true;
 
     // Use this for initialization
     void Start ()
     {
         timeRemaining = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].InhaleRatio;
-        GetComponent<TextMesh>().text = "Inhale";
+        GetComponent<TextMesh>().text = "Prepare";
         InvokeRepeating("decreaseTimeRemaining", 1.0f, 1.0f);
     }
 	
@@ -62,8 +63,8 @@ public class ShowAdvice : MonoBehaviour {
                 {
                     audio.pitch = 1.1f;
                 }
-                audio.Stop();
-                audio.Play();
+                
+                PlayAudio();
             }
 
             timeRemaining = timeToAdd;
@@ -72,6 +73,31 @@ public class ShowAdvice : MonoBehaviour {
 
     void decreaseTimeRemaining()
     {
-        timeRemaining--;
+        if (ChangeCycleTime.InitalCounter > 0)
+        {
+            GetComponent<TextMesh>().text = "Prepare";
+        }
+        else
+        {
+            if (setFirstInhale)
+            {
+                GetComponent<TextMesh>().text = "Inhale";
+                setFirstInhale = false;
+                PlayAudio();
+            }
+            else
+            {
+                timeRemaining--;
+            }
+        }
+    }
+
+    void PlayAudio()
+    {
+        if (GlobalVariables.SoundOn == 1)
+        {
+            audio.Stop();
+            audio.Play();
+        }
     }
 }

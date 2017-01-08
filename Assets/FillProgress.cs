@@ -14,9 +14,12 @@ public class FillProgress : MonoBehaviour {
     }
     void Update()
     {
-        if (circularSlider.fillAmount >= 1f)
-            circularSlider.fillAmount = 0f;
+        if (ChangeCycleTime.InitalCounter == 0)
+        { 
+            if (circularSlider.fillAmount >= 1f)
+                circularSlider.fillAmount = 0f;
 
-        circularSlider.fillAmount += Time.deltaTime / time;
+            circularSlider.fillAmount += Time.deltaTime / time;
+        }
     }
 }
