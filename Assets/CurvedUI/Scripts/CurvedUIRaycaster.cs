@@ -1066,6 +1066,7 @@ namespace CurvedUI
         public List<GameObject> GetObjectsUnderPointer()
         {
             if (lastHovered == null) lastHovered = new List<GameObject>();
+
             return lastHovered;
         }
 

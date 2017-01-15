@@ -11,6 +11,7 @@ public class SettingsManager : MonoBehaviour
     public AudioSource AudioSource;
     public Button AudioButton;
     public Text FrozenLakeTime;
+    public Text FrozenForestTime;
     public Text ClearMindTime;
     public Text RelaxTime;
     public Text CalmingTime;
@@ -42,6 +43,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         GlobalVariables.FrozenLakeTime = GetTime("FrozenLakeTime");
+        GlobalVariables.FrozenForestTime = GetTime("FrozenForestTime");
         GlobalVariables.ClearMindTime = GetTime("ClearMindTime");
         GlobalVariables.RelaxTime = GetTime("RelaxTime");
         GlobalVariables.CalmingTime = GetTime("CalmingTime");
@@ -52,6 +54,9 @@ public class SettingsManager : MonoBehaviour
 
         if (GlobalVariables.FrozenLakeTime != DateTime.MinValue)
             FrozenLakeTime.text = String.Format("Last played: {0:ddd, MMM d}", GlobalVariables.FrozenLakeTime);
+
+        if (GlobalVariables.FrozenForestTime != DateTime.MinValue)
+            FrozenForestTime.text = String.Format("Last played: {0:ddd, MMM d}", GlobalVariables.FrozenForestTime);
 
         if (GlobalVariables.ClearMindTime != DateTime.MinValue)
             ClearMindTime.text = String.Format("Last used: {0:ddd, MMM d}", GlobalVariables.ClearMindTime);
@@ -75,7 +80,7 @@ public class SettingsManager : MonoBehaviour
             AntiAppetiteTime.text = String.Format("Last used: {0:ddd, MMM d}", GlobalVariables.AntiAppetiteTime);
     }
 
-    public static void PersistData()
+    public static void PersistData(int sceneToPlay)
     {
         PlayerPrefs.SetInt("MeditationPractice", GlobalVariables.MeditationPractice);
         PlayerPrefs.SetInt("TimeMinutes", GlobalVariables.TimeMinutes);
@@ -120,7 +125,15 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
-        PlayerPrefs.SetString("FrozenLakeTime", DateTime.Now.ToString());
+        switch (sceneToPlay)
+        {
+            case 0:
+                PlayerPrefs.SetString("FrozenLakeTime", DateTime.Now.ToString());
+                break;
+            case 1:
+                PlayerPrefs.SetString("FrozenForestTime", DateTime.Now.ToString());
+                break;
+        }
     }
 
     private DateTime GetTime(string timeString)

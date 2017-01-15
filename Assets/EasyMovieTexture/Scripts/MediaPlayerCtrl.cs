@@ -278,7 +278,7 @@ public class MediaPlayerCtrl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        m_strFileName = GlobalVariables.SceneToPlay;
 
 	
 
@@ -2779,22 +2779,26 @@ AVHWAccel *ff_find_hwaccel( AVCodecID codec_id,  AVPixelFormat pix_fmt)
 		if (bEnd == true && listVideo.Count == 0 )
 		{
 			
-			m_CurrentState = MEDIAPLAYER_STATE.END;
+			//m_CurrentState = MEDIAPLAYER_STATE.END;
 
 			if (OnEnd != null)
 			{
 				OnEnd();
 				
-				//return;
+				return;
 			}
 
 
 			if (m_bLoop == true)
 			{
-				Destroy (audioClip);
-				audioClip = null;
-				Load (m_strFileName);
-				bEnd = false;
+                Destroy (audioClip);
+                audioClip = null;
+                //Call_Play(0);
+                
+                Call_SetSeekPosition(1);
+                Call_RePlay();
+
+                bEnd = false;
 				return;
 			}
 

@@ -3,11 +3,13 @@
 public static class GlobalVariables
 {
     public static int MeditationPractice = 0;
+    public static string SceneToPlay = "frozenlake.mp4";
     public static int TimeMinutes = 7;
     public static int SoundOn = 1;
 
     // Last used/played.
     public static DateTime FrozenLakeTime = DateTime.MinValue;
+    public static DateTime FrozenForestTime = DateTime.MinValue;
     public static DateTime ClearMindTime = DateTime.MinValue;
     public static DateTime RelaxTime = DateTime.MinValue;
     public static DateTime CalmingTime = DateTime.MinValue;
