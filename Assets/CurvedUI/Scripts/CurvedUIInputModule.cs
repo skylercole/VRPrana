@@ -10,9 +10,11 @@ using Valve.VR;
 #endif 
 
 [ExecuteInEditMode]
+#if CURVEDUI_GOOGLEVR
+public class CurvedUIInputModule : GvrPointerInputModule {
+#else
 public class CurvedUIInputModule : StandaloneInputModule {
-
-
+#endif 
 
     //main references
     static CurvedUIInputModule instance;
@@ -32,9 +34,6 @@ public class CurvedUIInputModule : StandaloneInputModule {
     [SerializeField]
     CurvedUIController controller;
     public string submitButtonName = "Fire1"; // name of button to use for click/submit
-    //public string controlAxisName = "Horizontal";// name of axis to use for scrolling/sliders
-
-
 
     //SETTINGS - World Space Mouse
     float worldSpaceMouseSensitivity = 1;
@@ -99,430 +98,124 @@ public class CurvedUIInputModule : StandaloneInputModule {
     [SerializeField]
     OVRInput.Button InteractionButton = OVRInput.Button.PrimaryIndexTrigger;
 #endif
+
+
 #pragma warning restore 414, 0649
+#endregion 
 
-    //enums
-    public enum CurvedUIController
-    {
-        MOUSE = 0,
-        GAZE = 1,
-        WORLD_MOUSE = 2,
-        CUSTOM_RAY = 3,
-        VIVE = 4,
-        OCULUS_TOUCH = 5,
-        DAYDREAM = 6,
-    }
 
-    public enum ActiveVRController
-    {
-        Both = 0,
-        Right = 1,
-        Left = 2,
-    }
-    #endregion 
 
-    #region LIFECYCLE
-    protected override void Awake(){
 
-        if (!Application.isPlaying) return;
+
+
+	#if CURVEDUI_GOOGLEVR
+
+
+
+
+	#else // CURVEDUI_GOOGLEVR ELSE
+
+	protected override void Awake(){
+		if (!Application.isPlaying) return;
 
 		Instance = this;
 		base.Awake ();
 
-
-#if CURVEDUI_VIVE
-        //SEtup controllers for vive
-        if(Controller == CurvedUIController.VIVE)
-             SetupViveControllers();
-#endif
-    }
-
-
-    void Update()
-    {
-        ////moving the world space mouse
-        //if (Controller == CurvedUIController.WORLD_MOUSE)
-        //{
-        //    //touch can also be used to control a world space mouse, although its probably not the best experience
-        //    //Use standard mouse controller with touch.
-        //    if (Input.touchCount > 0)
-        //    {
-        //        worldSpaceMouseOnCanvasDelta = Input.GetTouch(0).deltaPosition * worldSpaceMouseSensitivity;
-        //    }
-        //    else {
-        //        worldSpaceMouseOnCanvasDelta = new Vector2((Input.mousePosition - lastMouseOnScreenPos).x, (Input.mousePosition - lastMouseOnScreenPos).y) * worldSpaceMouseSensitivity;
-        //        lastMouseOnScreenPos = Input.mousePosition;
-        //    }
-        //    lastWorldSpaceMouseOnCanvas = worldSpaceMouseInCanvasSpace;
-        //    worldSpaceMouseInCanvasSpace += worldSpaceMouseOnCanvasDelta;
-        //}
-
-    }
-#endregion
-
-#region EVENT PROCESSING - GENERAL
-    /// <summary>
-    /// Process is called by UI system to process events 
-    /// </summary>
-    public override void Process()
-    {
-
-        switch (controller)
-        {
-            case CurvedUIController.MOUSE:
-            {
-                base.Process();
-                break;
-            }
-            case CurvedUIController.GAZE:
-            {
-                ProcessGaze();
-                break;
-            }
-            case CurvedUIController.VIVE:
-            {
-                ProcessViveControllers();
-                break;
-            }
-            case CurvedUIController.OCULUS_TOUCH:
-            {
-                ProcessOculusTouchController();
-                break;
-            }
-            case CurvedUIController.WORLD_MOUSE:
-            {
-                //touch can also be used as a world space mouse, although its probably not the best experience
-                //Use standard mouse controller with touch.
-                if (Input.touchCount > 0)
-                {
-                    worldSpaceMouseOnCanvasDelta = Input.GetTouch(0).deltaPosition * worldSpaceMouseSensitivity;
-                } else {
-                    worldSpaceMouseOnCanvasDelta = new Vector2((Input.mousePosition - lastMouseOnScreenPos).x, (Input.mousePosition - lastMouseOnScreenPos).y) * worldSpaceMouseSensitivity;
-                    lastMouseOnScreenPos = Input.mousePosition;
-                }
-                lastWorldSpaceMouseOnCanvas = worldSpaceMouseInCanvasSpace;
-                worldSpaceMouseInCanvasSpace += worldSpaceMouseOnCanvasDelta;
-
-                base.Process();
-
-                break;
-            }
-            case CurvedUIController.CUSTOM_RAY:
-            {
-                ProcessCustomRayController();
-                break;
-            }
-            case CurvedUIController.DAYDREAM:
-            {
-                ProcessCustomRayController();
-                break;
-            }
-            default: goto case CurvedUIController.MOUSE;
-        }
-    }
-    #endregion
-
-
-
-    #region EVENT PROCESSING - GAZE
-    protected virtual void ProcessGaze()
-    {
-        bool usedEvent = SendUpdateEventToSelectedObject();
-
-        if (eventSystem.sendNavigationEvents)
-        {
-            if (!usedEvent)
-                usedEvent |= SendMoveEventToSelectedObject();
-
-            if (!usedEvent)
-                SendSubmitEventToSelectedObject();
-        }
-
-        ProcessMouseEvent();
-    }
-
-    #endregion
-
-
-    #region EVENT PROCESSING - VIVE
-    protected virtual void ProcessViveControllers()
-    {
-#if CURVEDUI_VIVE
-        switch (eventController)
-        {
-            case ActiveVRController.Right:
-            {
-                //in case only one controller is turned on, it will still be used to call events.
-                if (controllerManager.right.activeInHierarchy)
-                    ProcessController(controllerManager.right);
-                else if (controllerManager.left.activeInHierarchy)
-                    ProcessController(controllerManager.left);
-                break;
-            }
-            case ActiveVRController.Left:
-            {
-                //in case only one controller is turned on, it will still be used to call events.
-                if (controllerManager.left.activeInHierarchy)
-                    ProcessController(controllerManager.left);
-                else if (controllerManager.right.activeInHierarchy)
-                    ProcessController(controllerManager.right);
-                break;
-            }
-            case ActiveVRController.Both:
-            {
-                ProcessController(controllerManager.left);
-                ProcessController(controllerManager.right);
-                break;
-            }
-            default: goto case ActiveVRController.Right;
-        }
-    }
-
-
-    /// <summary>
-    /// Processes Events from given controller.
-    /// </summary>
-    /// <param name="myController"></param>
-    void ProcessController(GameObject myController)
-    {
-        //do not process events from this controller if it's off or not visible by base stations.
-        if (!myController.gameObject.activeInHierarchy) return;
-
-        //get the assistant or add it if its missing.
-        CurvedUIViveController myControllerAssitant = myController.AddComponentIfMissing<CurvedUIViveController>();
-
-        // send update events if there is a selected object - this is important for InputField to receive keyboard events
-        SendUpdateEventToSelectedObject();
-
-        // see if there is a UI element that is currently being pointed at
-        PointerEventData ControllerData;
-        if(myControllerAssitant == Right)
-            ControllerData = GetControllerPointerData(myControllerAssitant, ref rightControllerData);
-         else
-            ControllerData = GetControllerPointerData(myControllerAssitant, ref leftControllerData);
-
-
-        currentPointedAt = ControllerData.pointerCurrentRaycast.gameObject;
-
-        ProcessDownRelease(ControllerData, myControllerAssitant.IsTriggerDown, myControllerAssitant.IsTriggerUp);
-
-        //Process move and drag if trigger is pressed
-        if (!myControllerAssitant.IsTriggerUp)
-        {
-            ProcessMove(ControllerData);
-            ProcessDrag(ControllerData);
-        }
-
-        if (!Mathf.Approximately(ControllerData.scrollDelta.sqrMagnitude, 0.0f))
-        {
-            var scrollHandler = ExecuteEvents.GetEventHandler<IScrollHandler>(ControllerData.pointerCurrentRaycast.gameObject);
-            ExecuteEvents.ExecuteHierarchy(scrollHandler, ControllerData, ExecuteEvents.scrollHandler);
-            // Debug.Log("executing scroll handler");
-        }
-
-    }
-
-    /// <summary>
-    /// Create a pointerEventData that stores all the data associated with Vive controller.
-    /// </summary>
-    private CurvedUIPointerEventData GetControllerPointerData(CurvedUIViveController controller, ref CurvedUIPointerEventData ControllerData)
-    {
-
-        if (ControllerData == null)
-            ControllerData = new CurvedUIPointerEventData(eventSystem);
-
-        ControllerData.Reset();
-        ControllerData.delta = Vector2.one; // to trick into moving
-        ControllerData.position = Vector2.zero; // this will be overriden by raycaster
-        ControllerData.Controller = controller.gameObject; // raycaster will use this object to override pointer position on screen. Keep it safe.
-        ControllerData.scrollDelta = controller.TouchPadAxis - ControllerData.TouchPadAxis; // calcualte scroll delta
-        ControllerData.TouchPadAxis = controller.TouchPadAxis; // assign finger position on touchpad
-
-        eventSystem.RaycastAll(ControllerData, m_RaycastResultCache); //Raycast all the things!. Position will be overridden here by CurvedUIRaycaster
-
-        //Get a current raycast to find if we're pointing at GUI object. 
-        ControllerData.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
-        m_RaycastResultCache.Clear();
-
-        return ControllerData;
-    }
-
-
-    /// <summary>
-    /// Sends trigger down / trigger released events to gameobjects under the pointer.
-    /// </summary>
-    protected virtual void ProcessDownRelease(PointerEventData ControllerData, bool down, bool released)
-    {
-        var currentOverGo = ControllerData.pointerCurrentRaycast.gameObject;
-
-        // PointerDown notification
-        if (down)
-        {
-            ControllerData.eligibleForClick = true;
-            ControllerData.delta = Vector2.zero;
-            ControllerData.dragging = false;
-            ControllerData.useDragThreshold = true;
-            ControllerData.pressPosition = ControllerData.position;
-            ControllerData.pointerPressRaycast = ControllerData.pointerCurrentRaycast;
-
-            DeselectIfSelectionChanged(currentOverGo, ControllerData);
-
-            if (ControllerData.pointerEnter != currentOverGo)
-            {
-                // send a pointer enter to the touched element if it isn't the one to select...
-                HandlePointerExitAndEnter(ControllerData, currentOverGo);
-                ControllerData.pointerEnter = currentOverGo;
-            }
-
-            // search for the control that will receive the press
-            // if we can't find a press handler set the press
-            // handler to be what would receive a click.
-            var newPressed = ExecuteEvents.ExecuteHierarchy(currentOverGo, ControllerData, ExecuteEvents.pointerDownHandler);
-
-            // didnt find a press handler... search for a click handler
-            if (newPressed == null)
-                newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
-
-
-            float time = Time.unscaledTime;
-
-            if (newPressed == ControllerData.lastPress)
-            {
-                var diffTime = time - ControllerData.clickTime;
-                if (diffTime < 0.3f)
-                    ++ControllerData.clickCount;
-                else
-                    ControllerData.clickCount = 1;
-
-                ControllerData.clickTime = time;
-            }
-            else
-            {
-                ControllerData.clickCount = 1;
-            }
-
-            ControllerData.pointerPress = newPressed;
-            ControllerData.rawPointerPress = currentOverGo;
-
-            ControllerData.clickTime = time;
-
-            // Save the drag handler as well
-            ControllerData.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(currentOverGo);
-
-            if (ControllerData.pointerDrag != null)
-                ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.initializePotentialDrag);
-        }
-
-        // PointerUp notification
-        if (released)
-        {
-            // Debug.Log("Executing pressup on: " + pointer.pointerPress);
-            ExecuteEvents.Execute(ControllerData.pointerPress, ControllerData, ExecuteEvents.pointerUpHandler);
-
-            // see if we mouse up on the same element that we clicked on...
-            var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
-
-            // PointerClick and Drop events
-            if (ControllerData.pointerPress == pointerUpHandler && ControllerData.eligibleForClick)
-            {
-                ExecuteEvents.Execute(ControllerData.pointerPress, ControllerData, ExecuteEvents.pointerClickHandler);
-            }
-            else if (ControllerData.pointerDrag != null && ControllerData.dragging)
-            {
-                ExecuteEvents.ExecuteHierarchy(currentOverGo, ControllerData, ExecuteEvents.dropHandler);
-            }
-
-            ControllerData.eligibleForClick = false;
-            ControllerData.pointerPress = null;
-            ControllerData.rawPointerPress = null;
-
-            if (ControllerData.pointerDrag != null && ControllerData.dragging)
-                ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.endDragHandler);
-
-            ControllerData.dragging = false;
-            ControllerData.pointerDrag = null;
-
-            if (ControllerData.pointerDrag != null)
-                ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.endDragHandler);
-
-            ControllerData.pointerDrag = null;
-
-            // send exit events as we need to simulate this on touch up on touch device
-            ExecuteEvents.ExecuteHierarchy(ControllerData.pointerEnter, ControllerData, ExecuteEvents.pointerExitHandler);
-            ControllerData.pointerEnter = null;
-        }
-    }
-
-    private bool ShouldStartDrag(Vector2 pressPos, Vector2 currentPos, float threshold, bool useDragThreshold)
-    {
-        if (!useDragThreshold)
-            return true;
-
-        //this always returns false if override pointereventdata in curveduiraycster.cs is set to false. There is no past pointereventdata to compare with then.
-        return (pressPos - currentPos).sqrMagnitude >= threshold * threshold;
-    }
-
-    /// <summary>
-    /// Force selection of a gameobject.
-    /// </summary>
-    private void Select(GameObject go)
-    {
-        ClearSelection();
-        if (ExecuteEvents.GetEventHandler<ISelectHandler>(go))
-        {
-            eventSystem.SetSelectedGameObject(go);
-        }
-    }
-
-    /// <summary>
-    /// Adds necessary components to Vive controller gameobjects. These will let us know what inputs are used on them.
-    /// </summary>
-    private void SetupViveControllers()
-    {
-        //Find Controller manager on the scene.
-        if (controllerManager == null)
-        {
-            SteamVR_ControllerManager[] potentialManagers = Object.FindObjectsOfType<SteamVR_ControllerManager>();
-            controllerManager = null;
-
-            //ignore external camera created by externalcamera.cfg for mixed reality videos
-            if (potentialManagers.GetLength(0) > 0)
-            {
-                for (int i = 0; i < potentialManagers.GetLength(0); i++)
-                {
-                    if (potentialManagers[i].gameObject.name != "External Camera")
-                        controllerManager = potentialManagers[i];
-                }
-            }
-
-            if (controllerManager == null)
-                Debug.LogError("Can't find SteamVR_ControllerManager on scene. It is required to use VIVE control method. Make sure all SteamVR prefabs are present.");
-        }
-#endif
-    }
-#endregion
-
-
-
-#region EVENT PROCESSING - OCULUS TOUCH
-    protected virtual void ProcessOculusTouchController()
-    {
-#if CURVEDUI_TOUCH
-        //First pass the direction and position of the controller as ray to your canvas
-        CustomControllerRay = new Ray(TouchControllerTransform.position, TouchControllerTransform.forward);
-
-        //now pass the state of your button to CurvedUIInputModule
-        CustromControllerButtonDown = OVRInput.Get(InteractionButton, OVRInput.Controller.RTouch);
-
-        ProcessCustomRayController();
-#endif
-    }
-#endregion
-
-
-
-#region EVENT PROCESSING - CUSTOM RAY
-    protected virtual void ProcessCustomRayController(){
+	#if CURVEDUI_VIVE
+		//SEtup controllers for vive
+		if(Controller == CurvedUIController.VIVE)
+		SetupViveControllers();
+	#endif // END OF CURVEDUI_VIVE IF
+	}
+
+
+
+	#region EVENT PROCESSING - GENERAL
+	/// <summary>
+	/// Process is called by UI system to process events 
+	/// </summary>
+	public override void Process()
+	{
+
+		switch (controller)
+		{
+		case CurvedUIController.MOUSE:
+			{
+				base.Process();
+				break;
+			}
+		case CurvedUIController.GAZE:
+			{
+				ProcessGaze();
+				break;
+			}
+		case CurvedUIController.VIVE:
+			{
+				ProcessViveControllers();
+				break;
+			}
+		case CurvedUIController.OCULUS_TOUCH:
+			{
+				ProcessOculusTouchController();
+				break;
+			}
+		case CurvedUIController.WORLD_MOUSE:
+			{
+				//touch can also be used as a world space mouse, although its probably not the best experience
+				//Use standard mouse controller with touch.
+				if (Input.touchCount > 0)
+				{
+					worldSpaceMouseOnCanvasDelta = Input.GetTouch(0).deltaPosition * worldSpaceMouseSensitivity;
+				} else {
+					worldSpaceMouseOnCanvasDelta = new Vector2((Input.mousePosition - lastMouseOnScreenPos).x, (Input.mousePosition - lastMouseOnScreenPos).y) * worldSpaceMouseSensitivity;
+					lastMouseOnScreenPos = Input.mousePosition;
+				}
+				lastWorldSpaceMouseOnCanvas = worldSpaceMouseInCanvasSpace;
+				worldSpaceMouseInCanvasSpace += worldSpaceMouseOnCanvasDelta;
+
+				base.Process();
+
+				break;
+			}
+		case CurvedUIController.CUSTOM_RAY:
+			{
+				ProcessCustomRayController();
+				break;
+			}
+		case CurvedUIController.DAYDREAM:
+			{
+				ProcessCustomRayController();
+				break;
+			}
+		default: goto case CurvedUIController.MOUSE;
+		}
+	}
+	#endregion // EVENT PROCESSING - GENERAL
+
+
+
+	#region EVENT PROCESSING - GAZE
+	protected virtual void ProcessGaze()
+	{
+		bool usedEvent = SendUpdateEventToSelectedObject();
+
+		if (eventSystem.sendNavigationEvents)
+		{
+			if (!usedEvent)
+				usedEvent |= SendMoveEventToSelectedObject();
+
+			if (!usedEvent)
+				SendSubmitEventToSelectedObject();
+		}
+
+		ProcessMouseEvent();
+	}
+	#endregion // EVENT PROCESSING - GAZE
+
+
+
+	#region EVENT PROCESSING - CUSTOM RAY
+	protected virtual void ProcessCustomRayController(){
 
 		var mouseData = GetMousePointerEventData(0);
 		PointerEventData eventData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData.buttonData;
@@ -592,15 +285,15 @@ public class CurvedUIInputModule : StandaloneInputModule {
 			if (eventData.pointerPress == eventData.selectedObject/*Vector2.Distance (eventData.position, eventData.pressPosition) < dragThreshold*/) {
 				ExecuteEvents.Execute (eventData.selectedObject, eventData, ExecuteEvents.pointerClickHandler);
 			} 
-          
+
 			//execute pointer up events
 			ExecuteEvents.Execute(eventData.selectedObject, eventData, ExecuteEvents.pointerUpHandler);
 
 			//process end drag
 			//if (eventData.pointerDrag != null && eventData.dragging) {
-				ExecuteEvents.Execute (eventData.pointerDrag, eventData, ExecuteEvents.endDragHandler);
-				eventData.dragging = false;
-				eventData.pointerDrag = null;
+			ExecuteEvents.Execute (eventData.pointerDrag, eventData, ExecuteEvents.endDragHandler);
+			eventData.dragging = false;
+			eventData.pointerDrag = null;
 			//}
 		}
 
@@ -613,20 +306,297 @@ public class CurvedUIInputModule : StandaloneInputModule {
 		//save button state for this frame
 		pressedLastFrame = pressedDown;
 	}
-    #endregion
+
+	#endregion // EVENT PROCESSING - CUSTOM RAY
 
 
-    #region PUBLIC FUNCTIONS
-    ///// <summary>
-    ///// Clear the currently selected gameobject
-    ///// </summary>
-    //public void ClearSelection()
-    //{
-    //    if (eventSystem.currentSelectedGameObject)
-    //    {
-    //        eventSystem.SetSelectedGameObject(null);
-    //    }
-    //}
+
+	#region EVENT PROCESSING - VIVE
+	protected virtual void ProcessViveControllers()
+	{
+	#if CURVEDUI_VIVE
+	switch (eventController)
+	{
+	case ActiveVRController.Right:
+	{
+	//in case only one controller is turned on, it will still be used to call events.
+	if (controllerManager.right.activeInHierarchy)
+	ProcessController(controllerManager.right);
+	else if (controllerManager.left.activeInHierarchy)
+	ProcessController(controllerManager.left);
+	break;
+	}
+	case ActiveVRController.Left:
+	{
+	//in case only one controller is turned on, it will still be used to call events.
+	if (controllerManager.left.activeInHierarchy)
+	ProcessController(controllerManager.left);
+	else if (controllerManager.right.activeInHierarchy)
+	ProcessController(controllerManager.right);
+	break;
+	}
+	case ActiveVRController.Both:
+	{
+	ProcessController(controllerManager.left);
+	ProcessController(controllerManager.right);
+	break;
+	}
+	default: goto case ActiveVRController.Right;
+	}
+	}
+
+
+	/// <summary>
+	/// Processes Events from given controller.
+	/// </summary>
+	/// <param name="myController"></param>
+	void ProcessController(GameObject myController)
+	{
+	//do not process events from this controller if it's off or not visible by base stations.
+	if (!myController.gameObject.activeInHierarchy) return;
+
+	//get the assistant or add it if its missing.
+	CurvedUIViveController myControllerAssitant = myController.AddComponentIfMissing<CurvedUIViveController>();
+
+	// send update events if there is a selected object - this is important for InputField to receive keyboard events
+	SendUpdateEventToSelectedObject();
+
+	// see if there is a UI element that is currently being pointed at
+	PointerEventData ControllerData;
+	if(myControllerAssitant == Right)
+	ControllerData = GetControllerPointerData(myControllerAssitant, ref rightControllerData);
+	else
+	ControllerData = GetControllerPointerData(myControllerAssitant, ref leftControllerData);
+
+
+	currentPointedAt = ControllerData.pointerCurrentRaycast.gameObject;
+
+	ProcessDownRelease(ControllerData, myControllerAssitant.IsTriggerDown, myControllerAssitant.IsTriggerUp);
+
+	//Process move and drag if trigger is pressed
+	if (!myControllerAssitant.IsTriggerUp)
+	{
+	ProcessMove(ControllerData);
+	ProcessDrag(ControllerData);
+	}
+
+	if (!Mathf.Approximately(ControllerData.scrollDelta.sqrMagnitude, 0.0f))
+	{
+	var scrollHandler = ExecuteEvents.GetEventHandler<IScrollHandler>(ControllerData.pointerCurrentRaycast.gameObject);
+	ExecuteEvents.ExecuteHierarchy(scrollHandler, ControllerData, ExecuteEvents.scrollHandler);
+	// Debug.Log("executing scroll handler");
+	}
+
+	}
+
+	/// <summary>
+	/// Create a pointerEventData that stores all the data associated with Vive controller.
+	/// </summary>
+	private CurvedUIPointerEventData GetControllerPointerData(CurvedUIViveController controller, ref CurvedUIPointerEventData ControllerData)
+	{
+
+	if (ControllerData == null)
+	ControllerData = new CurvedUIPointerEventData(eventSystem);
+
+	ControllerData.Reset();
+	ControllerData.delta = Vector2.one; // to trick into moving
+	ControllerData.position = Vector2.zero; // this will be overriden by raycaster
+	ControllerData.Controller = controller.gameObject; // raycaster will use this object to override pointer position on screen. Keep it safe.
+	ControllerData.scrollDelta = controller.TouchPadAxis - ControllerData.TouchPadAxis; // calcualte scroll delta
+	ControllerData.TouchPadAxis = controller.TouchPadAxis; // assign finger position on touchpad
+
+	eventSystem.RaycastAll(ControllerData, m_RaycastResultCache); //Raycast all the things!. Position will be overridden here by CurvedUIRaycaster
+
+	//Get a current raycast to find if we're pointing at GUI object. 
+	ControllerData.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
+	m_RaycastResultCache.Clear();
+
+	return ControllerData;
+	}
+
+
+	/// <summary>
+	/// Sends trigger down / trigger released events to gameobjects under the pointer.
+	/// </summary>
+	protected virtual void ProcessDownRelease(PointerEventData ControllerData, bool down, bool released)
+	{
+	var currentOverGo = ControllerData.pointerCurrentRaycast.gameObject;
+
+	// PointerDown notification
+	if (down)
+	{
+	ControllerData.eligibleForClick = true;
+	ControllerData.delta = Vector2.zero;
+	ControllerData.dragging = false;
+	ControllerData.useDragThreshold = true;
+	ControllerData.pressPosition = ControllerData.position;
+	ControllerData.pointerPressRaycast = ControllerData.pointerCurrentRaycast;
+
+	DeselectIfSelectionChanged(currentOverGo, ControllerData);
+
+	if (ControllerData.pointerEnter != currentOverGo)
+	{
+	// send a pointer enter to the touched element if it isn't the one to select...
+	HandlePointerExitAndEnter(ControllerData, currentOverGo);
+	ControllerData.pointerEnter = currentOverGo;
+	}
+
+	// search for the control that will receive the press
+	// if we can't find a press handler set the press
+	// handler to be what would receive a click.
+	var newPressed = ExecuteEvents.ExecuteHierarchy(currentOverGo, ControllerData, ExecuteEvents.pointerDownHandler);
+
+	// didnt find a press handler... search for a click handler
+	if (newPressed == null)
+	newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
+
+
+	float time = Time.unscaledTime;
+
+	if (newPressed == ControllerData.lastPress)
+	{
+	var diffTime = time - ControllerData.clickTime;
+	if (diffTime < 0.3f)
+	++ControllerData.clickCount;
+	else
+	ControllerData.clickCount = 1;
+
+	ControllerData.clickTime = time;
+	}
+	else
+	{
+	ControllerData.clickCount = 1;
+	}
+
+	ControllerData.pointerPress = newPressed;
+	ControllerData.rawPointerPress = currentOverGo;
+
+	ControllerData.clickTime = time;
+
+	// Save the drag handler as well
+	ControllerData.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(currentOverGo);
+
+	if (ControllerData.pointerDrag != null)
+	ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.initializePotentialDrag);
+	}
+
+	// PointerUp notification
+	if (released)
+	{
+	// Debug.Log("Executing pressup on: " + pointer.pointerPress);
+	ExecuteEvents.Execute(ControllerData.pointerPress, ControllerData, ExecuteEvents.pointerUpHandler);
+
+	// see if we mouse up on the same element that we clicked on...
+	var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
+
+	// PointerClick and Drop events
+	if (ControllerData.pointerPress == pointerUpHandler && ControllerData.eligibleForClick)
+	{
+	ExecuteEvents.Execute(ControllerData.pointerPress, ControllerData, ExecuteEvents.pointerClickHandler);
+	}
+	else if (ControllerData.pointerDrag != null && ControllerData.dragging)
+	{
+	ExecuteEvents.ExecuteHierarchy(currentOverGo, ControllerData, ExecuteEvents.dropHandler);
+	}
+
+	ControllerData.eligibleForClick = false;
+	ControllerData.pointerPress = null;
+	ControllerData.rawPointerPress = null;
+
+	if (ControllerData.pointerDrag != null && ControllerData.dragging)
+	ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.endDragHandler);
+
+	ControllerData.dragging = false;
+	ControllerData.pointerDrag = null;
+
+	if (ControllerData.pointerDrag != null)
+	ExecuteEvents.Execute(ControllerData.pointerDrag, ControllerData, ExecuteEvents.endDragHandler);
+
+	ControllerData.pointerDrag = null;
+
+	// send exit events as we need to simulate this on touch up on touch device
+	ExecuteEvents.ExecuteHierarchy(ControllerData.pointerEnter, ControllerData, ExecuteEvents.pointerExitHandler);
+	ControllerData.pointerEnter = null;
+	}
+	}
+
+	private bool ShouldStartDrag(Vector2 pressPos, Vector2 currentPos, float threshold, bool useDragThreshold)
+	{
+	if (!useDragThreshold)
+	return true;
+
+	//this always returns false if override pointereventdata in curveduiraycster.cs is set to false. There is no past pointereventdata to compare with then.
+	return (pressPos - currentPos).sqrMagnitude >= threshold * threshold;
+	}
+
+	/// <summary>
+	/// Force selection of a gameobject.
+	/// </summary>
+	private void Select(GameObject go)
+	{
+	ClearSelection();
+	if (ExecuteEvents.GetEventHandler<ISelectHandler>(go))
+	{
+	eventSystem.SetSelectedGameObject(go);
+	}
+	}
+
+	/// <summary>
+	/// Adds necessary components to Vive controller gameobjects. These will let us know what inputs are used on them.
+	/// </summary>
+	private void SetupViveControllers()
+	{
+	//Find Controller manager on the scene.
+	if (controllerManager == null)
+	{
+	SteamVR_ControllerManager[] potentialManagers = Object.FindObjectsOfType<SteamVR_ControllerManager>();
+	controllerManager = null;
+
+	//ignore external camera created by externalcamera.cfg for mixed reality videos
+	if (potentialManagers.GetLength(0) > 0)
+	{
+	for (int i = 0; i < potentialManagers.GetLength(0); i++)
+	{
+	if (potentialManagers[i].gameObject.name != "External Camera")
+	controllerManager = potentialManagers[i];
+	}
+	}
+
+	if (controllerManager == null)
+	Debug.LogError("Can't find SteamVR_ControllerManager on scene. It is required to use VIVE control method. Make sure all SteamVR prefabs are present.");
+	}
+	#endif
+	}
+	#endregion
+
+
+
+	#region EVENT PROCESSING - OCULUS TOUCH
+	protected virtual void ProcessOculusTouchController()
+	{
+	#if CURVEDUI_TOUCH
+	//First pass the direction and position of the controller as ray to your canvas
+	CustomControllerRay = new Ray(TouchControllerTransform.position, TouchControllerTransform.forward);
+
+	//now pass the state of your button to CurvedUIInputModule
+	CustromControllerButtonDown = OVRInput.Get(InteractionButton, OVRInput.Controller.RTouch);
+
+	ProcessCustomRayController();
+	#endif
+	}
+	#endregion
+
+
+
+
+	#endif // END OF CURVEDUI_GOOGLEVR IF
+
+
+
+ 
+
+
+    #region HELPER FUNCTIONS
 
     static T EnableInputModule<T>() where T : BaseInputModule
     {
@@ -649,7 +619,7 @@ public class CurvedUIInputModule : StandaloneInputModule {
 
         return eventGO.GetComponent<T>();
     }
-#endregion
+	#endregion  // HELPER FUNCTIONS
 
 
 
@@ -777,10 +747,10 @@ public class CurvedUIInputModule : StandaloneInputModule {
                   leftCont = controllerManager.left.AddComponentIfMissing<CurvedUIViveController>();
 
                 return leftCont; }
-        }
+        }  
+#endif // CURVEDUI_VIVE
 
-      
-#endif
+
 
 
 #if CURVEDUI_TOUCH
@@ -791,7 +761,35 @@ public class CurvedUIInputModule : StandaloneInputModule {
             InteractionButton = value;
         }
     }
-#endif
+#endif // CURVEDUI_TOUCH
 
-#endregion
+
+
+
+#endregion // SETTERS AND GETTERS
+
+
+
+
+#region ENUMS
+//enums
+public enum CurvedUIController
+{
+	MOUSE = 0,
+	GAZE = 1,
+	WORLD_MOUSE = 2,
+	CUSTOM_RAY = 3,
+	VIVE = 4,
+	OCULUS_TOUCH = 5,
+	DAYDREAM = 6,
+	GOOGLEVR = 7,
+}
+
+public enum ActiveVRController
+{
+	Both = 0,
+	Right = 1,
+	Left = 2,
+}
+#endregion // ENUMS
 }

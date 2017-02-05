@@ -18,15 +18,32 @@ public class CurvedUISettingsEditor : Editor {
 #pragma warning disable 414
         bool ShowRemoveCurvedUI = false;
         static bool ShowAdvaced = false;
-
-        bool enablingVive = false;
-        bool enablingTouch = false;
+		bool loadingCustomDefine = false;
 #pragma warning restore 414
 
 
-        void Start(){
-		AddCurvedUIComponents();
-	}
+
+		#region LIFECYCLE
+        void Start()
+		{
+			AddCurvedUIComponents();
+		}
+			
+		void OnEnable()
+		{
+			EditorApplication.hierarchyWindowChanged += AddCurvedUIComponents;
+			loadingCustomDefine = false;
+
+		}
+
+		void OnDisable()
+		{
+			EditorApplication.hierarchyWindowChanged -= AddCurvedUIComponents;
+		}
+		#endregion 
+
+
+
 
         public override void OnInspectorGUI() {
         CurvedUISettings myTarget = (CurvedUISettings)target;
@@ -37,7 +54,8 @@ public class CurvedUISettingsEditor : Editor {
         GUI.changed = false;
         EditorGUIUtility.labelWidth = 150;
 
-            DrawControlMethods();
+		//global setting - control methods
+        DrawControlMethods();
 
         //shape settings
         GUILayout.Label("Shape", EditorStyles.boldLabel);
@@ -89,19 +107,22 @@ public class CurvedUISettingsEditor : Editor {
         GUILayout.Space(10);
 
         if (!ShowAdvaced) {
-                if (GUILayout.Button("Show Advanced Settings")) {
-                    ShowAdvaced = true;
-					if(enablingVive)enablingVive = false;
-                 }
+			//show advanced settings enable button
+            if (GUILayout.Button("Show Advanced Settings")) {
+                ShowAdvaced = true;
+				loadingCustomDefine = false;
+             }
 
         } else {
+			// or just show advanced settings
+
+			//hide advances settings button.
             if (GUILayout.Button("Hide Advanced Settings")) ShowAdvaced = false;
                 GUILayout.Space(20);
 
 
-
+			//common options
             GUILayout.Label("Other Options", EditorStyles.boldLabel);
-
             myTarget.Interactable = EditorGUILayout.Toggle("Interactable", myTarget.Interactable);
 			myTarget.BlocksRaycasts = EditorGUILayout.Toggle("Blocks Raycasts", myTarget.BlocksRaycasts);
             myTarget.RaycastMyLayerOnly = EditorGUILayout.Toggle("Raycast My Layer Only", myTarget.RaycastMyLayerOnly);
@@ -112,20 +133,17 @@ public class CurvedUISettingsEditor : Editor {
             GUILayout.EndHorizontal();
 
 
-
+			//add components button
             GUILayout.Space(20);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Components", GUILayout.Width(146));
-            if (GUILayout.Button("Add Effect To Children"))
-            {
-                AddCurvedUIComponents();
-            }
+			if (GUILayout.Button("Add Effect To Children"))AddCurvedUIComponents();
             GUILayout.EndHorizontal();
 
 
+			//remove components button
             GUILayout.BeginHorizontal();
             GUILayout.Label("", GUILayout.Width(146));
-
             if (!ShowRemoveCurvedUI) {
                 if (GUILayout.Button("Remove CurvedUI from Canvas")) ShowRemoveCurvedUI = true;
             } else {
@@ -136,76 +154,17 @@ public class CurvedUISettingsEditor : Editor {
                     ShowRemoveCurvedUI = false;
                 }
             }
-                GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
 
+        }  // end of advanced settings
 
-
-                // Left for later, may come usefull
-                //				if (GUILayout.Button("Get Defines"))  {
-                //					Debug.Log(PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup));
-                //						
-                //				}
-                //
-                //				if (GUILayout.Button("Enable VIVE support"))  {
-                //
-                //					string str = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                //					if(!str.Contains("CURVEDUI_VIVE")){
-                //						str += ";CURVEDUI_VIVE";
-                //						PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
-                //					}
-                //
-                //				}
-                //
-                //
-                //				if (GUILayout.Button("Enable TMP support"))  {
-                //
-                //					string str = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                //					if(!str.Contains("CURVEDUI_TMP")){
-                //						str += ";CURVEDUI_TMP";
-                //						PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
-                //					}
-                //
-                //				}
-                //
-                //
-//#if CURVEDUI_TMP || CURVEDUI_VIVE || CURVEDUI_TOUCH
-//                GUILayout.BeginHorizontal();
-//                GUILayout.Label("", GUILayout.Width(146));
-//                if (GUILayout.Button("Remove CurvedUI Custom Defines"))
-//                {
-//                    string str = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-//                    if (!str.Contains("CURVEDUI_TMP"))
-//                    {
-//                        str.Replace("CURVEDUI_TMP", "");
-//                    }
-
-//                    if (!str.Contains("CURVEDUI_TOUCH"))
-//                    {
-//                        str.Replace("CURVEDUI_TOUCH", "");
-//                    }
-
-//                    if (!str.Contains("CURVEDUI_VIVE"))
-//                    {
-//                        str.Replace("CURVEDUI_VIVE", "");
-
-//                    }
-
-//                    PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
-//                }
-//                GUILayout.EndHorizontal();
-//#endif
-
-
-            }  // end of advanced settings
-
-            //final settings
-            if (GUI.changed)
-		EditorUtility.SetDirty(myTarget);
+        //final settings
+        if (GUI.changed)
+			EditorUtility.SetDirty(myTarget);
 
 	}
 
-
-
+	
     void DrawControlMethods()
         {
             GUILayout.Label("Global Settings", EditorStyles.boldLabel);
@@ -214,37 +173,71 @@ public class CurvedUISettingsEditor : Editor {
             CurvedUIInputModule.Controller = (CurvedUIInputModule.CurvedUIController)EditorGUILayout.EnumPopup("Control Method", CurvedUIInputModule.Controller);
             GUILayout.BeginHorizontal();
             GUILayout.Space(150);
+			GUILayout.BeginVertical();
+
             switch (CurvedUIInputModule.Controller)
             {
                 case CurvedUIInputModule.CurvedUIController.MOUSE:
                 {
 
-                    GUILayout.Label("Basic Controller. Mouse in screen space.", EditorStyles.helpBox);
+#if CURVEDUI_GOOGLEVR
+					EditorGUILayout.HelpBox("Enabling this control method will disable GoogleVR Gaze support.", MessageType.Warning);
+
+					DrawCustomDefineSwitcher("");
+#else
+                    GUILayout.Label("Basic Controller. Mouse on screen", EditorStyles.helpBox);
+					#endif
                     break;
                 }
                 case CurvedUIInputModule.CurvedUIController.GAZE:
                 {
-                    GUILayout.Label("Center of Canvas's World Camera acts as a pointer.", EditorStyles.helpBox);
+#if CURVEDUI_GOOGLEVR
+					EditorGUILayout.HelpBox("Enabling this control method will disable GoogleVR Gaze support.", MessageType.Warning);
+
+					DrawCustomDefineSwitcher("");
+
+#else
+                    GUILayout.Label("Center of Canvas's World Camera acts as a pointer. This is a generic gaze implementation, to be used with any headset. If you're on cardboard, use GOOGLEVR control method for Reticle and GameObject interaction support.", EditorStyles.helpBox);
+					#endif
                     break;
                 }
                 case CurvedUIInputModule.CurvedUIController.WORLD_MOUSE:
                 {
+
+#if CURVEDUI_GOOGLEVR
+					EditorGUILayout.HelpBox("Enabling this control method will disable GoogleVR Gaze support.", MessageType.Warning);
+
+					DrawCustomDefineSwitcher("");
+#else
                     GUILayout.Label("Mouse controller that is independent of the camera view. Use WorldSpaceMouseOnCanvas function to get its position.", EditorStyles.helpBox);
-                    GUILayout.EndHorizontal();
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(150);
-                    CurvedUIInputModule.Instance.WorldSpaceMouseSensitivity = EditorGUILayout.FloatField("Mouse Sensitivity", CurvedUIInputModule.Instance.WorldSpaceMouseSensitivity);
-                    break;
+					GUILayout.EndHorizontal();
+					GUILayout.BeginHorizontal();
+					GUILayout.Space(150);
+					CurvedUIInputModule.Instance.WorldSpaceMouseSensitivity = EditorGUILayout.FloatField("Mouse Sensitivity", CurvedUIInputModule.Instance.WorldSpaceMouseSensitivity);
+					#endif
+					break;
                 }
                 case CurvedUIInputModule.CurvedUIController.CUSTOM_RAY:
                 {
-                    GUILayout.Label("Set a ray used to find selected objects with CustomControllerRay function. Use CustromControllerButtonDown bool to set button pressed state. /nYou can find both of these in CurvedUIInputModule", EditorStyles.helpBox);
-                    break;
+#if CURVEDUI_GOOGLEVR
+					EditorGUILayout.HelpBox("Enabling this control method will disable GoogleVR Gaze support.", MessageType.Warning);
+
+					DrawCustomDefineSwitcher("");
+#else
+                    GUILayout.Label("Set a ray used to interact with canvas using CustomControllerRay function. Use CustromControllerButtonDown bool to set button pressed state. \nYou can find both in CurvedUIInputModule class", EditorStyles.helpBox);
+					#endif
+					break;
                 }
                 case CurvedUIInputModule.CurvedUIController.DAYDREAM:
                 {
-                    GUILayout.Label("Set a ray used to find selected objects with CustomControllerRay function. Use CustromControllerButtonDown bool to set button pressed state. /nYou can find both of these in CurvedUIInputModule", EditorStyles.helpBox);
-                    break;
+#if CURVEDUI_GOOGLEVR
+					EditorGUILayout.HelpBox("Enabling this control method will disable GoogleVR Gaze Reticle support. It's counter-intuitive, but if you're working with daydream controller - you want this.", MessageType.Warning);
+
+					DrawCustomDefineSwitcher("");
+#else
+                    GUILayout.Label("Set a ray used to find selected objects with CustomControllerRay function. Use CustromControllerButtonDown bool to set button pressed state. /n You can find both of these in CurvedUIInputModule", EditorStyles.helpBox);
+					#endif
+					break;
                 }
                 case CurvedUIInputModule.CurvedUIController.VIVE:
                 {
@@ -252,29 +245,11 @@ public class CurvedUISettingsEditor : Editor {
 #if CURVEDUI_VIVE
                     // vive enabled, we can show settings
                     GUILayout.Label("Use one or both vive controllers as to interact with canvas. Trigger acts a button", EditorStyles.helpBox);
-                    GUILayout.EndHorizontal();
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(150);
                     CurvedUIInputModule.Instance.UsedVRController = (CurvedUIInputModule.ActiveVRController)EditorGUILayout.EnumPopup("Used Controller", CurvedUIInputModule.Instance.UsedVRController);
-#else
-                    // vive not enabled, lets leave some info how to do it.
-                    GUILayout.BeginVertical();
-                    GUILayout.Label("To enable Vive support, use the button below to add \"CURVEDUI_VIVE\" to your Scripting Define Symbols. CurvedUI will recompile and you'll see Vive related settings here.", EditorStyles.helpBox);
 
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(50);
-                    if (GUILayout.Button(enablingVive ? "Please wait..." : "Enable VIVE support"))
-                    {
-                        enablingVive = true;
-                        string str = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                        if (!str.Contains("CURVEDUI_VIVE"))
-                        {
-                            str += ";CURVEDUI_VIVE";
-                            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
-                        }
-                    }
-                    GUILayout.EndHorizontal();
-                    GUILayout.EndVertical();
+#else
+					DrawCustomDefineSwitcher("CURVEDUI_VIVE");
+
 #endif
                     break;
                 }
@@ -282,13 +257,8 @@ public class CurvedUISettingsEditor : Editor {
                 {
 
 #if CURVEDUI_TOUCH
-                    // vive enabled, we can show settings
+                    // oculus enabled, we can show settings
                     GUILayout.Label("Use Touch controller to interact with canvas.", EditorStyles.helpBox);
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(150);
-                    GUILayout.BeginVertical();
 
                     //transform property
                     SerializedObject serializedInputModule = new UnityEditor.SerializedObject(CurvedUIInputModule.Instance);
@@ -298,31 +268,24 @@ public class CurvedUISettingsEditor : Editor {
 
                     //button property
                     CurvedUIInputModule.Instance.OculusTouchInteractionButton = (OVRInput.Button)EditorGUILayout.EnumPopup("Interaction Button", CurvedUIInputModule.Instance.OculusTouchInteractionButton);
-                    GUILayout.EndVertical();
 #else
-                        // vive not enabled, lets leave some info how to do it.
-                        GUILayout.BeginVertical();
-                        GUILayout.Label("To enable Oculus Touch, use the button below to add \"CURVEDUI_TOUCH\" to your Scripting Define Symbols. CurvedUI will recompile and you'll see Touch related settings here.", EditorStyles.helpBox);
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Space(50);
-                        if (GUILayout.Button(enablingTouch ? "Please wait..." : "Enable OCULUS TOUCH"))
-                        {
-                            enablingTouch = true;
-                            string str = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-                            if (!str.Contains("CURVEDUI_TOUCH"))
-                            {
-                                str += ";CURVEDUI_TOUCH";
-                                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                        GUILayout.EndVertical();
+					DrawCustomDefineSwitcher("CURVEDUI_TOUCH");
 #endif
                     break;
                 }
+				case CurvedUIInputModule.CurvedUIController.GOOGLEVR:
+				{
+					
+#if CURVEDUI_GOOGLEVR
+					GUILayout.Label("Use GoogleVR Reticle to interact with canvas.", EditorStyles.helpBox);
+#else
+					DrawCustomDefineSwitcher("CURVEDUI_GOOGLEVR");
+#endif
+					break;
+				}
             }
 
+			GUILayout.EndVertical();
 
             GUILayout.EndHorizontal();
             GUILayout.Space(20);
@@ -330,19 +293,58 @@ public class CurvedUISettingsEditor : Editor {
 
 
 
+		/// <summary>
+		/// Draws the define switcher for different control methods. 
+		/// Because different control methods use different API's that may not always be available, 
+		/// CurvedUI needs to be recompile with different custom defines to fix this. This method 
+		/// manages the defines.
+		/// </summary>
+		/// <param name="switcho">Switcho.</param>
+		void DrawCustomDefineSwitcher(string switcho)
+		{
+			GUILayout.BeginVertical();
+			GUILayout.Label("Press the button below to make CurvedUI recompile for this control method. It should take less than 30 seconds. Afterwards, you'll see its settings here.", EditorStyles.helpBox);
+
+			GUILayout.BeginHorizontal();
+			GUILayout.Space(50);
+			if (GUILayout.Button(loadingCustomDefine ? "Please wait..." : "Enable."))
+			{
+				loadingCustomDefine = true;
+				string str = "";
+				str += PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+
+				//remove curvedui defines
+				foreach(string define in new string[]{"CURVEDUI_VIVE","CURVEDUI_TOUCH","CURVEDUI_GOOGLEVR"}){
+					if (str.Contains(define))
+					{
+						if(str.Contains((";" + define)))
+							str = str.Replace((";" + define), "");
+						else
+ 							str = str.Replace(define, "");
+					}
+				}
 
 
-        void OnEnable()
-        {
-            EditorApplication.hierarchyWindowChanged += AddCurvedUIComponents;
-        }
+				//add this one, if not present.
+				if (switcho != "" && !str.Contains(switcho))
+				{
+					str += ";" + switcho;
+				}
 
-        void OnDisable()
-        {
-            EditorApplication.hierarchyWindowChanged -= AddCurvedUIComponents;
-        }
+				Debug.Log ("submitted str: " + str);
 
-        //Travel the hierarchy and add CurvedUIVertexEffect to every gameobject that can be bent.
+				PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, str);
+
+			}
+			GUILayout.EndHorizontal();
+			GUILayout.EndVertical();
+		}
+
+
+
+		/// <summary>
+		///Travel the hierarchy and add CurvedUIVertexEffect to every gameobject that can be bent.
+		/// </summary>
         private void AddCurvedUIComponents()
         {
             if (target == null) return;
@@ -351,30 +353,35 @@ public class CurvedUISettingsEditor : Editor {
 
         }
 
+
+
+		/// <summary>
+		/// Removes all CurvedUI components from this canvas.
+		/// </summary>
         private void RemoveCurvedUIComponents()
-    {
-        if (target == null) return;
+   		{
+	        if (target == null) return;
 
-        //destroy componenets
-        List<CurvedUIVertexEffect> comps = new List<CurvedUIVertexEffect>();
-        comps.AddRange((target as CurvedUISettings).GetComponentsInChildren<CurvedUIVertexEffect>(true));
-        for (int i = 0; i < comps.Count; i++)
-        {
-            if (comps[i].GetComponent<UnityEngine.UI.Graphic>() != null) comps[i].GetComponent<UnityEngine.UI.Graphic>().SetAllDirty();
-            DestroyImmediate(comps[i]);
-            
-        }
+	        //destroy componenets
+	        List<CurvedUIVertexEffect> comps = new List<CurvedUIVertexEffect>();
+	        comps.AddRange((target as CurvedUISettings).GetComponentsInChildren<CurvedUIVertexEffect>(true));
+	        for (int i = 0; i < comps.Count; i++)
+	        {
+	            if (comps[i].GetComponent<UnityEngine.UI.Graphic>() != null) comps[i].GetComponent<UnityEngine.UI.Graphic>().SetAllDirty();
+	            DestroyImmediate(comps[i]);
+	            
+	        }
 
-        //destroy raycasters
-        List<CurvedUIRaycaster> raycasters = new List<CurvedUIRaycaster>();
-        raycasters.AddRange((target as CurvedUISettings).GetComponents<CurvedUIRaycaster>());
-        for (int i = 0; i < raycasters.Count; i++)
-        {
-            DestroyImmediate(raycasters[i]);
-        }
+	        //destroy raycasters
+	        List<CurvedUIRaycaster> raycasters = new List<CurvedUIRaycaster>();
+	        raycasters.AddRange((target as CurvedUISettings).GetComponents<CurvedUIRaycaster>());
+	        for (int i = 0; i < raycasters.Count; i++)
+	        {
+	            DestroyImmediate(raycasters[i]);
+	        }
 
-        DestroyImmediate(target);
-    }
+	        DestroyImmediate(target);
+   		}
 
      
     }

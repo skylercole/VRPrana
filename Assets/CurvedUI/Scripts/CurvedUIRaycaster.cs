@@ -183,6 +183,10 @@ namespace CurvedUI
                 {
                     goto case CurvedUIInputModule.CurvedUIController.CUSTOM_RAY;
                 }
+				case CurvedUIInputModule.CurvedUIController.GOOGLEVR:
+				{
+					goto case CurvedUIInputModule.CurvedUIController.GAZE;
+				}
                 default:
                 {
                     ray3D = new Ray();
@@ -1066,7 +1070,6 @@ namespace CurvedUI
         public List<GameObject> GetObjectsUnderPointer()
         {
             if (lastHovered == null) lastHovered = new List<GameObject>();
-
             return lastHovered;
         }
 

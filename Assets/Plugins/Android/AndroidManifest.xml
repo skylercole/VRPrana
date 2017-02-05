@@ -7,7 +7,7 @@
     android:versionCode="1"
     android:versionName="1.0">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="19" />
-	<uses-feature android:glEsVersion="0x00030000" android:required="true" />
+	<uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <supports-screens
         android:smallScreens="true"
         android:normalScreens="true"
@@ -28,7 +28,7 @@
 		  android:excludeFromRecents="true">
 		  <intent-filter>
 		   <action android:name="android.intent.action.MAIN" />
-		   <category android:name="android.intent.category.INFO" />
+		   <category android:name="android.intent.category.LAUNCHER" />
 		  </intent-filter>            
         </activity>
 		<meta-data android:name="com.threehundred.pranavr"

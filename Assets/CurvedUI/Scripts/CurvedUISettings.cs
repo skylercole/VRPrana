@@ -5,20 +5,18 @@ using UnityEngine.EventSystems;
 using TMPro;
 #endif 
 
+
+/// <summary>
+/// This class stores settings for the entire canvas. It also stores useful methods for converting cooridinates to and from 2d canvas to curved canvas, or world space.
+/// CurvedUIVertexEffect components (added to every canvas gameobject)ask this class for per-canvas settings when applying their curve effect.
+/// </summary>
+
 namespace CurvedUI
 {
+	[AddComponentMenu("CurvedUI/CurvedUISettings")]
     [RequireComponent(typeof(Canvas))]
     public class CurvedUISettings : MonoBehaviour
     {
-        #region ENUMS
-        public enum CurvedUIShape
-        {
-            CYLINDER = 0,
-            RING = 1,
-            SPHERE = 2,
-            CYLINDER_VERTICAL = 3,
-        }
-        #endregion
 
         #region SETTINGS
         //Global settings
@@ -65,13 +63,6 @@ namespace CurvedUI
 
 
 #region LIFECYCLE
-        //void Awake()
-        //{
-        //    if (Application.isPlaying)
-        //    {
-        //        CheckNeccessaryInputModules();
-        //    }
-        //}
 
         void Start()
         {
@@ -129,35 +120,6 @@ namespace CurvedUI
                 Debug.LogError("CurvedUI: Your Canvas size must be bigger than 0!");
         }
         #endregion
-
-
-//#region INPUT MODULE MANAGEMENT
-//        void CheckNeccessaryInputModules()
-//        {
-//            EnableInputModule<CurvedUIInputModule>();
-
-//            //if (Controller == CurvedUIController.VIVE)
-//            //{
-//            //#if CURVEDUI_VIVE
-//            //                CurvedUIViveInputModule viveInput = EnableInputModule<CurvedUIViveInputModule>();
-//            //                viveInput.EventController = usedViveController;
-//            //#else
-//            //                   Debug.LogWarning("Add CURVEDUI_VIVE to your platform custom defines to enable Vive support in CurvedUI.");
-//            //#endif
-//            //            }
-//            //            else if (Controller == CurvedUIController.OCULUS_TOUCH)
-//            //            {
-//            //#if CURVEDUI_TOUCH
-//            //                EnableInputModule<CurvedUIInputModule>();
-//            //#else
-//            //                Debug.LogWarning("Add CURVEDUI_TOUCH to your platform custom defines to enable Oculus Touch support in CurvedUI.");
-//            //#endif
-//            //            }
-//        }
-
-      
-
-//#endregion
 
 
 #region PRIVATE
@@ -698,9 +660,17 @@ namespace CurvedUI
                     eff.CurvingRequired = true;
             }
         }
-
-
-
+			
  #endregion
+
+		#region ENUMS
+		public enum CurvedUIShape
+		{
+			CYLINDER = 0,
+			RING = 1,
+			SPHERE = 2,
+			CYLINDER_VERTICAL = 3,
+		}
+		#endregion
     }
 }

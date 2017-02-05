@@ -1,4 +1,5 @@
 ﻿using System;
+using CurvedUI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayScene : MonoBehaviour, IPointerClickHandler
 {
     public int SceneSelected = 0;
+    public CurvedUISettings Settings;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -21,7 +23,7 @@ public class PlayScene : MonoBehaviour, IPointerClickHandler
         }
         
         SettingsManager.PersistData(SceneSelected);
-        GlobalVariables.MeditationPractice = Array.FindIndex(SelectBreathControl.isButtonPressed, x => x == true);
+
 
         switch (SceneSelected)
         {
