@@ -3,7 +3,7 @@
 public static class GlobalVariables
 {
     public static int MeditationPractice = 0;
-    public static string SceneToPlay = "frozenlake.mp4";
+    public static string SceneToPlay = "frozenforest.mp4";
     public static int TimeMinutes = 7;
     public static int SoundOn = 1;
 

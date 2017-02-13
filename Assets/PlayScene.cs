@@ -28,10 +28,10 @@ public class PlayScene : MonoBehaviour, IPointerClickHandler
         switch (SceneSelected)
         {
             case 0:
-                GlobalVariables.SceneToPlay = "frozenlake.mp4";
+                GlobalVariables.SceneToPlay = "frozenforest.mp4";
                 break;
             case 1:
-                GlobalVariables.SceneToPlay = "frozenforest.mp4";
+                GlobalVariables.SceneToPlay = "frozenlake.mp4";
                 break;
         }
 

@@ -32,7 +32,8 @@ public class SettingsManager : MonoBehaviour
         MainSlider.value = GlobalVariables.TimeMinutes;
         TimeText.text = String.Format("{00:00}:00", GlobalVariables.TimeMinutes);
         SelectBreathControl.isButtonPressed[GlobalVariables.MeditationPractice] = true;
-        BreathInfo.text = BreathControl.BreathControlText[GlobalVariables.MeditationPractice];
+        BreathInfo.text = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].Description;
+            //BreathControl.BreathControlText[GlobalVariables.MeditationPractice];
         InfoImage.overrideSprite = Resources.Load<Sprite>("menucircle" + (GlobalVariables.MeditationPractice + 1));
         InfoImage.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
 
@@ -95,32 +96,32 @@ public class SettingsManager : MonoBehaviour
             }
             case 1:
             {
-                PlayerPrefs.SetString("RelaxTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("AntiStressTime", DateTime.Now.ToString());
                 break;
             }
             case 2:
             {
-                PlayerPrefs.SetString("CalmingTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("AntiAppetiteTime", DateTime.Now.ToString());
                 break;
             }
             case 3:
             {
-                PlayerPrefs.SetString("PowerTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("RelaxTime", DateTime.Now.ToString());
                 break;
             }
             case 4:
             {
-                PlayerPrefs.SetString("HarmonyTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("PowerTime", DateTime.Now.ToString());
                 break;
             }
             case 5:
             {
-                PlayerPrefs.SetString("AntiStressTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("CalmingTime", DateTime.Now.ToString());
                 break;
-            }
+            }            
             case 6:
             {
-                PlayerPrefs.SetString("AntiAppetiteTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("HarmonyTime", DateTime.Now.ToString());
                 break;
             }
         }
@@ -128,10 +129,10 @@ public class SettingsManager : MonoBehaviour
         switch (sceneToPlay)
         {
             case 0:
-                PlayerPrefs.SetString("FrozenLakeTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("FrozenForestTime", DateTime.Now.ToString());
                 break;
             case 1:
-                PlayerPrefs.SetString("FrozenForestTime", DateTime.Now.ToString());
+                PlayerPrefs.SetString("FrozenLakeTime", DateTime.Now.ToString());
                 break;
         }
     }

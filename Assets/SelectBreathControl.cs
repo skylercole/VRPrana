@@ -27,7 +27,8 @@ public class SelectBreathControl: MonoBehaviour, IPointerClickHandler
         {
             Array.Clear(isButtonPressed, 0, isButtonPressed.Length);
 
-            BreathInfo.text = BreathControl.BreathControlText[ButtonNumber];
+            BreathInfo.text = ProgressTypes.ProgressTypeList[ButtonNumber].Description;
+                //BreathControl.BreathControlText[ButtonNumber];
             InfoImage.overrideSprite = Resources.Load<Sprite>("menucircle" + (ButtonNumber+1));
             InfoImage.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
         }
