@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/05 VRMenuWithVRRaycaster.unity
+- path: Assets/Scenes/MenuScene.unity
   isLoaded: 1
   isActive: 1

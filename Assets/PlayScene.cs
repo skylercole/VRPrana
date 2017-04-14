@@ -33,9 +33,11 @@ public class PlayScene : MonoBehaviour, IPointerClickHandler
             case 1:
                 GlobalVariables.SceneToPlay = "frozenlake.mp4";
                 break;
+            case 2:
+                GlobalVariables.SceneToPlay = "frozenisland.mp4";
+                break;
         }
 
-
-        SceneManager.LoadSceneAsync("Scenes/Demo_Sphere");
+        SceneManager.LoadSceneAsync("Scenes/VideoScene");
     }
 }

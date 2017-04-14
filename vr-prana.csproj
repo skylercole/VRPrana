@@ -52,6 +52,9 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -66,6 +69,9 @@
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -129,15 +135,48 @@
     <Compile Include="Assets\EasyMovieTexture\Scripts\MediaPlayerFullScreenCtrl.cs" />
     <Compile Include="Assets\EasyMovieTexture\Scripts\SeekBarCtrl.cs" />
     <Compile Include="Assets\EasyMovieTexture\Scripts\SphereMirror.cs" />
+    <Compile Include="Assets\ExitToMainMenu.cs" />
+    <Compile Include="Assets\ExitToOculus.cs" />
     <Compile Include="Assets\FillProgress.cs" />
     <Compile Include="Assets\FillWholeProgress.cs" />
     <Compile Include="Assets\GlobalVariables.cs" />
     <Compile Include="Assets\ManualCameraControl.cs" />
-    <Compile Include="Assets\Particle Ribbon\Scripts\ReverseNormals.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRBoundary.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRCameraRig.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRCommon.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRDebugHeadController.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRDisplay.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRHaptics.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRHapticsClip.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRInput.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRLint.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRManager.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVROnCompleteListener.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVROverlay.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRPlatformMenu.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRPlugin.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRProfile.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRTouchpad.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRTracker.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRChromaticAberration.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRCubemapCapture.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRDebugInfo.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGearVrController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGearVrControllerTest.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGrabbable.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGrabber.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGridCube.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRModeParms.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRMonoscopic.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRPlayerController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRRTOverlayConnector.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRResetOrientation.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
     <Compile Include="Assets\PlayScene.cs" />
-    <Compile Include="Assets\ProgressBar\Scripts\CiclularProgress.cs" />
-    <Compile Include="Assets\ProgressBar\Scripts\GameObjectRotate.cs" />
     <Compile Include="Assets\ProgressType.cs" />
+    <Compile Include="Assets\ResumeMeditation.cs" />
     <Compile Include="Assets\Scripts\ChangeText.cs" />
     <Compile Include="Assets\Scripts\Reticle.cs" />
     <Compile Include="Assets\SelectAudio.cs" />
@@ -198,6 +237,7 @@
     <Compile Include="Assets\VRStandardAssets\Scripts\VRInput.cs" />
     <Compile Include="Assets\VRStandardAssets\Scripts\VRInteractiveItem.cs" />
     <Compile Include="Assets\VRStandardAssets\Scripts\VRTrackingReset.cs" />
+    <Compile Include="Assets\VideoSceneBackButtonMenu.cs" />
     <Compile Include="Assets\VisibilityOnButton.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +248,13 @@
     <None Include="Assets\EasyMovieTexture\Unlit_SphereInside.shader" />
     <None Include="Assets\EasyMovieTexture\readme.txt" />
     <None Include="Assets\EasyMovieTexture\readme_License.txt" />
-    <None Include="Assets\Particle Ribbon\readme_Simple_Particle_Ribbon.txt" />
+    <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
+    <None Include="Assets\OVR\Resources\Underlay Impostor.shader" />
+    <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
+    <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
+    <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
+    <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
-    <None Include="Assets\ProgressBar\Shaders\AlphaProgress.shader" />
     <None Include="Assets\ReverseFont.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\SeparableAlpha.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\UIOverlay.shader" />

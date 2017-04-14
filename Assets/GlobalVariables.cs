@@ -10,6 +10,7 @@ public static class GlobalVariables
     // Last used/played.
     public static DateTime FrozenLakeTime = DateTime.MinValue;
     public static DateTime FrozenForestTime = DateTime.MinValue;
+    public static DateTime FrozenIslandTime = DateTime.MinValue;
     public static DateTime ClearMindTime = DateTime.MinValue;
     public static DateTime RelaxTime = DateTime.MinValue;
     public static DateTime CalmingTime = DateTime.MinValue;
@@ -17,4 +18,6 @@ public static class GlobalVariables
     public static DateTime HarmonyTime = DateTime.MinValue;
     public static DateTime AntiStressTime = DateTime.MinValue;
     public static DateTime AntiAppetiteTime = DateTime.MinValue;
+
+    public static bool IsVideoScenePaused = false;
 }

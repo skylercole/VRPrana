@@ -55,6 +55,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -97,6 +100,9 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.VR">
       <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
     </Reference>
@@ -127,6 +133,10 @@
     <Compile Include="Assets\CurvedUI\Scripts\Editor\CurvedUISettingsEditor.cs" />
     <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
     <Compile Include="Assets\Editor\SaveFontTexture.cs" />
+    <Compile Include="Assets\OVR\Editor\OVRBuild.cs" />
+    <Compile Include="Assets\OVR\Editor\OVRManifestPreprocessor.cs" />
+    <Compile Include="Assets\OVR\Editor\OVRMoonlightLoader.cs" />
+    <Compile Include="Assets\OVR\Editor\OVRScreenshotWizard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\OverlayBlend.shader" />
@@ -136,9 +146,13 @@
     <None Include="Assets\EasyMovieTexture\Unlit_SphereInside.shader" />
     <None Include="Assets\EasyMovieTexture\readme.txt" />
     <None Include="Assets\EasyMovieTexture\readme_License.txt" />
-    <None Include="Assets\Particle Ribbon\readme_Simple_Particle_Ribbon.txt" />
+    <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
+    <None Include="Assets\OVR\Resources\Underlay Impostor.shader" />
+    <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
+    <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
+    <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
+    <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
-    <None Include="Assets\ProgressBar\Shaders\AlphaProgress.shader" />
     <None Include="Assets\ReverseFont.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\SeparableAlpha.shader" />
     <None Include="Assets\VRSampleScenes\Shaders\UIOverlay.shader" />

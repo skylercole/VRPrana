@@ -12,6 +12,7 @@ public class SettingsManager : MonoBehaviour
     public Button AudioButton;
     public Text FrozenLakeTime;
     public Text FrozenForestTime;
+    public Text FrozenIslandTime;
     public Text ClearMindTime;
     public Text RelaxTime;
     public Text CalmingTime;
@@ -19,6 +20,7 @@ public class SettingsManager : MonoBehaviour
     public Text HarmonyTime;
     public Text AntiStressTime;
     public Text AntiAppetiteTime;
+    public Image RightMenu;
 
     private void Awake()
     {
@@ -32,10 +34,9 @@ public class SettingsManager : MonoBehaviour
         MainSlider.value = GlobalVariables.TimeMinutes;
         TimeText.text = String.Format("{00:00}:00", GlobalVariables.TimeMinutes);
         SelectBreathControl.isButtonPressed[GlobalVariables.MeditationPractice] = true;
-        BreathInfo.text = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].Description;
-            //BreathControl.BreathControlText[GlobalVariables.MeditationPractice];
-        InfoImage.overrideSprite = Resources.Load<Sprite>("menucircle" + (GlobalVariables.MeditationPractice + 1));
-        InfoImage.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        //BreathInfo.text = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].Description;
+        //InfoImage.overrideSprite = Resources.Load<Sprite>("menucircle" + (GlobalVariables.MeditationPractice + 1));
+        //InfoImage.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
 
         if (GlobalVariables.SoundOn == 0)
         {
@@ -45,6 +46,7 @@ public class SettingsManager : MonoBehaviour
 
         GlobalVariables.FrozenLakeTime = GetTime("FrozenLakeTime");
         GlobalVariables.FrozenForestTime = GetTime("FrozenForestTime");
+        GlobalVariables.FrozenIslandTime = GetTime("FrozenIslandTime");
         GlobalVariables.ClearMindTime = GetTime("ClearMindTime");
         GlobalVariables.RelaxTime = GetTime("RelaxTime");
         GlobalVariables.CalmingTime = GetTime("CalmingTime");
@@ -55,6 +57,9 @@ public class SettingsManager : MonoBehaviour
 
         if (GlobalVariables.FrozenLakeTime != DateTime.MinValue)
             FrozenLakeTime.text = String.Format("Last played: {0:ddd, MMM d}", GlobalVariables.FrozenLakeTime);
+
+        if (GlobalVariables.FrozenIslandTime != DateTime.MinValue)
+            FrozenIslandTime.text = String.Format("Last played: {0:ddd, MMM d}", GlobalVariables.FrozenIslandTime);
 
         if (GlobalVariables.FrozenForestTime != DateTime.MinValue)
             FrozenForestTime.text = String.Format("Last played: {0:ddd, MMM d}", GlobalVariables.FrozenForestTime);
@@ -79,6 +84,9 @@ public class SettingsManager : MonoBehaviour
 
         if (GlobalVariables.AntiAppetiteTime != DateTime.MinValue)
             AntiAppetiteTime.text = String.Format("Last used: {0:ddd, MMM d}", GlobalVariables.AntiAppetiteTime);
+
+        // Change right canvas's sprite.
+        RightMenu.overrideSprite = Resources.Load<Sprite>("rightmenu_" + (GlobalVariables.MeditationPractice + 1));
     }
 
     public static void PersistData(int sceneToPlay)
@@ -133,6 +141,9 @@ public class SettingsManager : MonoBehaviour
                 break;
             case 1:
                 PlayerPrefs.SetString("FrozenLakeTime", DateTime.Now.ToString());
+                break;
+            case 2:
+                PlayerPrefs.SetString("FrozenIslandTime", DateTime.Now.ToString());
                 break;
         }
     }

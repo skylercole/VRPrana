@@ -8,7 +8,10 @@ public class ChangeCycleTime : MonoBehaviour
 
     void Awake()
     {
-        InitalCounter = 3;
+        if (!GlobalVariables.IsVideoScenePaused)
+        {
+            InitalCounter = 3;
+        }
     }
 
     // Use this for initialization
@@ -21,24 +24,27 @@ public class ChangeCycleTime : MonoBehaviour
 	
     void decreaseTimeRemaining()
     {
-        if (InitalCounter > 1)
-        {
-            InitalCounter--;
-            GetComponent<TextMesh>().text = String.Format("{0:00}", InitalCounter);
-        }
-        else if (InitalCounter == 1)
-        {
-            InitalCounter--;
-            GetComponent<TextMesh>().text = String.Format("{0:00}", starttime);
-        }
-        else
-        {
-            starttime--;
+        if (!GlobalVariables.IsVideoScenePaused)
+        { 
+            if (InitalCounter > 1)
+            {
+                InitalCounter--;
+                GetComponent<TextMesh>().text = String.Format("{0:00}", InitalCounter);
+            }
+            else if (InitalCounter == 1)
+            {
+                InitalCounter--;
+                GetComponent<TextMesh>().text = String.Format("{0:00}", starttime);
+            }
+            else
+            {
+                starttime--;
 
-            if (starttime == 0)
-                starttime = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].CycleTime;
+                if (starttime == 0)
+                    starttime = ProgressTypes.ProgressTypeList[GlobalVariables.MeditationPractice].CycleTime;
 
-            GetComponent<TextMesh>().text = String.Format("{0:00}", starttime);
+                GetComponent<TextMesh>().text = String.Format("{0:00}", starttime);
+            }
         }
     }
 }

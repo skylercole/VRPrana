@@ -4,7 +4,7 @@ public class ShowAdvice : MonoBehaviour {
 
     float timeRemaining = 60f;
     private int currentAdvice = 0;
-    public AudioSource audio;
+    public AudioSource audioSource;
     private bool setFirstInhale = true;
 
     // Use this for initialization
@@ -17,7 +17,7 @@ public class ShowAdvice : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (timeRemaining <= 0)
+        if (timeRemaining <= 0 && !GlobalVariables.IsVideoScenePaused)
         {
             string advice = "";
             var timeToAdd = 0;
@@ -55,13 +55,13 @@ public class ShowAdvice : MonoBehaviour {
             {
                 GetComponent<TextMesh>().text = advice;
 
-                if (audio.pitch > 1)
-                { 
-                    audio.pitch = 1;
+                if (audioSource.pitch > 1)
+                {
+                    audioSource.pitch = 1;
                 }
                 else
                 {
-                    audio.pitch = 1.1f;
+                    audioSource.pitch = 1.1f;
                 }
                 
                 PlayAudio();
@@ -73,21 +73,24 @@ public class ShowAdvice : MonoBehaviour {
 
     void decreaseTimeRemaining()
     {
-        if (ChangeCycleTime.InitalCounter > 0)
-        {
-            GetComponent<TextMesh>().text = "Prepare";
-        }
-        else
-        {
-            if (setFirstInhale)
+        if (!GlobalVariables.IsVideoScenePaused)
+        { 
+            if (ChangeCycleTime.InitalCounter > 0)
             {
-                GetComponent<TextMesh>().text = "Inhale";
-                setFirstInhale = false;
-                PlayAudio();
+                GetComponent<TextMesh>().text = "Prepare";
             }
             else
             {
-                timeRemaining--;
+                if (setFirstInhale)
+                {
+                    GetComponent<TextMesh>().text = "Inhale";
+                    setFirstInhale = false;
+                    PlayAudio();
+                }
+                else
+                {
+                    timeRemaining--;
+                }
             }
         }
     }
@@ -96,8 +99,8 @@ public class ShowAdvice : MonoBehaviour {
     {
         if (GlobalVariables.SoundOn == 1)
         {
-            audio.Stop();
-            audio.Play();
+            audioSource.Stop();
+            audioSource.Play();
         }
     }
 }
