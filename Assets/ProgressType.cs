@@ -103,13 +103,13 @@ public static class ProgressTypes
     };
 }
 
-public static class BreathControl
-{
-    public static string Inhale = @"Inhale: Smoothly flow from each of the following stages:
-        1. Fill the bottom portion of your lungs.This expands the belly, while chest remains immobile.
-        2. Fill the middle portion of your lungs.This expands the rib cage.
-        3. Fill the upper portion of your lungs.This expands the collarbones.";
-    public static string Retain = "Retain: Fill the lungs up to 80/90% to prevent diziness. If you find it hard to retain air for a period of time, close the nostrils with your fingers.";
-    public static string Exhale = "Exhale: Perform it inversely to inhaling -- first the top portion of lungs, then middle and finally bottom, contracting the abdominal muscles at the end.";
-    public static string Sustain = "Sustain: Leave 10/15% of your air volume in the lungs after exhalation and exhale in the last second of your training cycle.";
-}
+//public static class BreathControl
+//{
+//    public static string Inhale = @"Inhale: Smoothly flow from each of the following stages:
+//        1. Fill the bottom portion of your lungs.This expands the belly, while chest remains immobile.
+//        2. Fill the middle portion of your lungs.This expands the rib cage.
+//        3. Fill the upper portion of your lungs.This expands the collarbones.";
+//    public static string Retain = "Retain: Fill the lungs up to 80/90% to prevent diziness. If you find it hard to retain air for a period of time, close the nostrils with your fingers.";
+//    public static string Exhale = "Exhale: Perform it inversely to inhaling -- first the top portion of lungs, then middle and finally bottom, contracting the abdominal muscles at the end.";
+//    public static string Sustain = "Sustain: Leave 10/15% of your air volume in the lungs after exhalation and exhale in the last second of your training cycle.";
+//}
