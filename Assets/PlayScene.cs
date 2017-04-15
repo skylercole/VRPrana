@@ -38,7 +38,6 @@ public class PlayScene : MonoBehaviour, IPointerClickHandler
                 break;
         }
 
-        GlobalVariables.IsVideoScenePaused = false;
         SceneManager.LoadSceneAsync("Scenes/VideoScene");
     }
 }

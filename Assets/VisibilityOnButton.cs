@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VRStandardAssets.Utils;
 
@@ -15,29 +16,27 @@ public class VisibilityOnButton : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        // TODO: Reenable.
+        input.OnClick += () =>
+        {
+            // Disable images
+            image1.enabled = !visible;
+            image2.enabled = !visible;
+            image3.enabled = !visible;
+            image4.enabled = !visible;
 
-        //input.OnClick += () =>
-        //{
-        //    // Disable images
-        //    image1.enabled = !visible;
-        //    image2.enabled = !visible;
-        //    image3.enabled = !visible;
-        //    image4.enabled = !visible;
+            // Disable texts
+            GameObject[] tagged = GameObject.FindGameObjectsWithTag("clickable");
+            foreach (GameObject f in tagged)
+            {
+                f.GetComponent<Renderer>().enabled = !visible;
+            }
 
-        //    // Disable texts
-        //    GameObject[] tagged = GameObject.FindGameObjectsWithTag("clickable");
-        //    foreach (GameObject f in tagged)
-        //    {
-        //        f.GetComponent<Renderer>().enabled = !visible;
-        //    }
+            visible = !visible;
+        };
 
-        //    visible = !visible;
-        //};
-
-        //input.OnCancel += () =>
-        //{
-        //    SceneManager.LoadSceneAsync("Scenes/MenuScene");
-        //};
+        input.OnCancel += () =>
+        {
+            SceneManager.LoadSceneAsync("Scenes/MenuScene");
+        };
     }
 }

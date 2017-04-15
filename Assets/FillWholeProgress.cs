@@ -13,15 +13,12 @@ public class FillWholeProgress : MonoBehaviour
     }
     void Update()
     {
-        if (!GlobalVariables.IsVideoScenePaused)
+        if (ChangeCycleTime.InitalCounter == 0)
         {
-            if (ChangeCycleTime.InitalCounter == 0)
-            {
-                if (circularSlider.fillAmount >= 1f)
-                    circularSlider.fillAmount = 0f;
+            if (circularSlider.fillAmount >= 1f)
+                circularSlider.fillAmount = 0f;
 
-                circularSlider.fillAmount += Time.deltaTime/time;
-            }
+            circularSlider.fillAmount += Time.deltaTime / time;
         }
     }
 }

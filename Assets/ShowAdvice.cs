@@ -17,7 +17,7 @@ public class ShowAdvice : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (timeRemaining <= 0 && !GlobalVariables.IsVideoScenePaused)
+        if (timeRemaining <= 0)
         {
             string advice = "";
             var timeToAdd = 0;
@@ -73,24 +73,21 @@ public class ShowAdvice : MonoBehaviour {
 
     void decreaseTimeRemaining()
     {
-        if (!GlobalVariables.IsVideoScenePaused)
-        { 
-            if (ChangeCycleTime.InitalCounter > 0)
+        if (ChangeCycleTime.InitalCounter > 0)
+        {
+            GetComponent<TextMesh>().text = "Prepare";
+        }
+        else
+        {
+            if (setFirstInhale)
             {
-                GetComponent<TextMesh>().text = "Prepare";
+                GetComponent<TextMesh>().text = "Inhale";
+                setFirstInhale = false;
+                PlayAudio();
             }
             else
             {
-                if (setFirstInhale)
-                {
-                    GetComponent<TextMesh>().text = "Inhale";
-                    setFirstInhale = false;
-                    PlayAudio();
-                }
-                else
-                {
-                    timeRemaining--;
-                }
+                timeRemaining--;
             }
         }
     }

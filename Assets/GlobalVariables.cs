@@ -18,6 +18,4 @@ public static class GlobalVariables
     public static DateTime HarmonyTime = DateTime.MinValue;
     public static DateTime AntiStressTime = DateTime.MinValue;
     public static DateTime AntiAppetiteTime = DateTime.MinValue;
-
-    public static bool IsVideoScenePaused = false;
 }

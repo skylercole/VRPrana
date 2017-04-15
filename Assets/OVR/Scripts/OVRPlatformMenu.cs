@@ -167,21 +167,13 @@ public class OVRPlatformMenu : MonoBehaviour
 	/// </summary>
 	void ShowConfirmQuitMenu()
 	{
-        if (SceneManager.GetActiveScene().name.Contains("VideoScene"))
-        {
-            VideoSceneBackButtonMenu.IsPausing = true;
-        }
-        else
-        {
 #if UNITY_ANDROID && !UNITY_EDITOR
 		Debug.Log("[PlatformUI-ConfirmQuit] Showing @ " + Time.time);
 		OVRManager.PlatformUIConfirmQuit();
 #endif
-
-        }
     }
 
-	void DoHandler(eHandler handler)
+    void DoHandler(eHandler handler)
 	{
 		if (handler == eHandler.ShowConfirmQuit)
 			ShowConfirmQuitMenu ();
